@@ -94,7 +94,7 @@ DBMS_OUTPUT.PUT_LINE('INVALID INPUT! TRY AGAIN');
 END;
 /
 
-SELECT * FROM BANK_ACCOUNTS
+--SELECT * FROM BANK_ACCOUNTS
 
 --Task 3: Write Procedure make_withdrawal
 --Create a procedure that:
