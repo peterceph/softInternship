@@ -60,6 +60,10 @@ from app_tokens where token = p_token;
 dbms_output.put_line('Token exist: '|| v_token);
 dbms_output.put_line('Token not expired' || expiry_dt);
 
+exception 
+when no_data_found
+dbms_output.put_line('Invalid token number');
+
 end;
 /
 
