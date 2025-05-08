@@ -1,0 +1,291 @@
+--PL/SQL Hands-On Task: Library Book Lending System
+--Scenario:
+--You're designing a simple system for a library to:
+--- Track available books
+--- Register members
+--- Allow book checkouts and returns
+--- Prevent borrowing if no copies are available
+--- Log all lending activities
+--Task 1: Create Tables
+--Create the following tables with sample data:
+--•	Table: library_books
+--book_id         VARCHAR2(10) PRIMARY KEY
+--title           VARCHAR2(100)
+--author          VARCHAR2(100)
+--total_copies    NUMBER(3)
+--available_copies NUMBER(3)
+--Add 3 books as sample data.
+--•	Table: library_members
+--member_id       VARCHAR2(10) PRIMARY KEY
+--member_name     VARCHAR2(100)
+--Add 2 sample members. 
+
+
+
+CREATE SEQUENCE LIB_BOOKS_SEQ
+START WITH 1
+INCREMENT BY 1
+NOCACHE
+NOCYCLE
+
+
+CREATE TABLE LIBRARY_BOOKS(
+BOOK_ID NUMBER PRIMARY KEY, 
+TITLE VARCHAR2(100),
+AUTHOR VARCHAR2(100),
+TOTAL_COPIES NUMBER(3),
+AVAILABLE_COPIES NUMBER(3)
+);
+
+INSERT INTO LIBRARY_BOOKS(BOOK_ID, TITLE, AUTHOR, TOTAL_COPIES, AVAILABLE_COPIES)
+VALUES(LIB_BOOKS_SEQ.NEXTVAL, 'Sapiens: A Brief History of Humankind', 'Yuval Noah Harari',10, 7);
+
+INSERT INTO LIBRARY_BOOKS(BOOK_ID, TITLE, AUTHOR, TOTAL_COPIES, AVAILABLE_COPIES)
+VALUES(LIB_BOOKS_SEQ.NEXTVAL, 'A Short History of Nearly Everything', 'Bill Bryson',3, 3);
+
+
+INSERT INTO LIBRARY_BOOKS(BOOK_ID, TITLE, AUTHOR, TOTAL_COPIES, AVAILABLE_COPIES)
+VALUES(LIB_BOOKS_SEQ.NEXTVAL, 'The Selfish Gene', 'Richard Dawkins',6, 2);
+
+INSERT INTO LIBRARY_BOOKS(BOOK_ID, TITLE, AUTHOR, TOTAL_COPIES, AVAILABLE_COPIES)
+VALUES('B004', 'Astrophysics for People in a Hurry', 'Neil deGrasse Tyson',6, 0);
+
+
+--SELECT * FROM LIBRARY_BOOKS
+
+--UPDATE LIBRARY_MEMBERS
+--SET MEMBER_ID = 'M002'
+--WHERE MEMBER_NAME  = 'BLESSING ADIBE';
+--
+--ALTER TABLE LIBRARY_MEMBERS
+--MODIFY  MEMBER_ID VARCHAR2(10);
+--
+--ALTER TABLE LIBRARY_MEMBERS
+--DROP  PRIMARY KEY;
+--
+--
+--SELECT * FROM LIBRARY_MEMBERS
+ 
+
+ ---------------------------------------------------------------------------------------------
+ ---------------------------------------------------------------------------------------------
+ 
+ CREATE SEQUENCE LIB_MEMBER_SEQ
+ START WITH 1
+ INCREMENT BY 1
+ NOCACHE
+ NOCYCLE
+ 
+ 
+ CREATE TABLE LIBRARY_MEMBERS(
+ MEMBER_ID VARCHAR2(10) PRIMARY KEY,
+ MEMBER_NAME VARCHAR2(100) 
+ );
+ 
+ INSERT INTO LIBRARY_MEMBERS(MEMBER_ID, MEMBER_NAME)VALUES(LIB_MEMBER_SEQ.NEXTVAL, 'SADIQ RAHEEM');
+ INSERT INTO LIBRARY_MEMBERS(MEMBER_ID, MEMBER_NAME)VALUES(LIB_MEMBER_SEQ.NEXTVAL, 'BLESSING ADIBE');
+
+--SELECT * FROM LIBRARY_MEMBERS
+
+
+
+
+
+--Task 2: Create Table borrow_log
+--Track all checkouts and returns:
+--log_id          NUMBER PRIMARY KEY
+--member_id       VARCHAR2(10)
+--book_id         VARCHAR2(10)
+--action_type     VARCHAR2(10), -- 'BORROW' or 'RETURN'
+--action_time     DATE
+--Create a sequence log_seq for generating log IDs.
+
+CREATE SEQUENCE LOGS_SEQ
+START WITH 1 
+INCREMENT BY 1
+NOCACHE
+NOCYCLE
+
+
+
+CREATE TABLE BORROW_LOG(
+LOG_ID NUMBER PRIMARY KEY,
+MEMBER_ID VARCHAR2(10),
+BOOK_ID VARCHAR2(10),
+ACTION_TYPE VARCHAR2(10), --'BORROW' OR 'RETURN'
+ACTION_TIME DATE
+);
+
+
+--Task 3: Procedure borrow_book
+--Inputs:
+--•	- p_member_id IN VARCHAR2
+--•	- p_book_id IN VARCHAR2
+--•	- p_msg OUT VARCHAR2
+--Action:
+--- Check if book is available
+--- Reduce available copies
+--- Log the borrow
+--- Return success or error message
+
+CREATE OR REPLACE PROCEDURE BORROW_BOOK(P_MEMBER_ID IN VARCHAR2, P_BOOK_ID IN VARCHAR2, P_MSG OUT VARCHAR2)
+
+AS
+
+
+   V_COUNT NUMBER;
+
+
+BEGIN
+
+SELECT COUNT(*) INTO V_COUNT FROM LIBRARY_BOOKS 
+WHERE BOOK_ID = P_BOOK_ID
+AND AVAILABLE_COPIES > 0 ; --CHECKS IF BOOK IS AVAILABLE
+--AND MEMBER_ID = P_MEMBER_ID;
+
+ IF  V_COUNT  > 0 THEN
+
+UPDATE LIBRARY_BOOKS
+SET AVAILABLE_COPIES = AVAILABLE_COPIES - 1
+WHERE BOOK_ID = P_BOOK_ID;
+
+P_MSG := 'YOU BORROWED SUCCESSFULLY!';
+
+INSERT INTO BORROW_LOG(LOG_ID, MEMBER_ID, BOOK_ID, ACTION_TYPE, ACTION_TIME)
+VALUES(LOGS_SEQ.NEXTVAL, P_MEMBER_ID, P_BOOK_ID, 'BORROW', SYSDATE);
+
+ELSE
+
+P_MSG := 'YOU ENCOUNTERED AN ERROR!';
+
+
+END IF;
+
+EXCEPTION
+
+WHEN NO_DATA_FOUND THEN
+P_MSG := 'YOU CANNOT BORROW BOOKS!';
+WHEN OTHERS THEN
+P_MSG := 'UNEXPECTED  ERROR !' || SQLERRM;
+END;
+/
+
+
+
+--SELECT B.BOOK_ID, B.AVAILABLE_COPIES, M.MEMBER_ID FROM BORROW_LOG L
+--JOIN LIBRARY_BOOKS B ON L.BOOK_ID = B.BOOK_ID
+--JOIN LIBRARY_MEMBERS M ON L.MEMBER_ID = M.MEMBER_ID;
+
+
+
+--SELECT * FROM BORROW_LOG
+
+
+
+
+
+--Task 4: Procedure return_book
+--Inputs:
+--•	- p_member_id IN VARCHAR2
+--•	- p_book_id IN VARCHAR2
+--•	- p_msg OUT VARCHAR2
+--Action:
+--- Increase available copies
+--- Log the return
+--- Return confirmation message
+
+CREATE OR REPLACE PROCEDURE RETURN_BOOK(P_MEMBER_ID IN VARCHAR2, P_BOOK_ID IN VARCHAR2, P_MSG OUT VARCHAR2) AS
+
+V_COUNT NUMBER;
+
+BEGIN
+
+SELECT COUNT(*) INTO V_COUNT FROM LIBRARY_BOOKS 
+WHERE BOOK_ID = P_BOOK_ID;
+
+IF V_COUNT > 0 THEN
+
+UPDATE LIBRARY_BOOKS
+SET AVAILABLE_COPIES = AVAILABLE_COPIES + 1
+WHERE BOOK_ID = P_BOOK_ID;
+
+P_MSG := 'BOOK SUCCESSFULLY RETURNED!';
+
+INSERT INTO BORROW_LOG(LOG_ID, MEMBER_ID, BOOK_ID, ACTION_TYPE, ACTION_TIME)
+VALUES(LOGS_SEQ.NEXTVAL, P_MEMBER_ID, p_BOOK_ID, 'RETURN', SYSDATE);
+
+ELSE
+
+P_MSG := 'ERROR RETURNING BOOK!';
+
+END IF;
+
+EXCEPTION 
+
+WHEN NO_DATA_FOUND THEN
+P_MSG := 'CANNOT FIND MEMBER!';
+WHEN OTHERS THEN
+P_MSG := 'UNEXPECTED ERROR';
+END;
+/
+
+
+
+--
+--
+--Task 5: Write Anonymous Block
+--Simulate the following:
+--•	- Member 'M001' borrows book 'B001'
+--•	- Member 'M001' returns book 'B001'
+--•	- Member 'M002' tries to borrow a book with 0 available copies
+
+
+
+DECLARE
+V_MEMBER_ID VARCHAR2(10);
+V_BOOK_ID VARCHAR2(10);
+V_MSG VARCHAR2(100);
+
+BEGIN
+BORROW_BOOK('M001','B001',V_MSG);
+
+DBMS_OUTPUT.PUT_LINE(V_MSG);
+
+END;
+/
+
+
+
+
+DECLARE
+V_MEMBER_ID VARCHAR2(20);
+V_BOOK_ID VARCHAR2 (20);
+V_MSG VARCHAR2(1000);
+
+BEGIN
+
+RETURN_BOOK('M001', 'B001', V_MSG);
+
+DBMS_OUTPUT.PUT_LINE(V_MSG);
+END;
+/
+
+
+DECLARE
+V_MEMBER_ID VARCHAR2(10);
+V_BOOK_ID VARCHAR2(10);
+V_MSG VARCHAR2(100);
+
+BEGIN
+BORROW_BOOK('M001','B004',V_MSG);
+
+DBMS_OUTPUT.PUT_LINE(V_MSG);
+
+END;
+/
+
+--SELECT * FROM LIBRARY_BOOKS
+
+--SELECT * FROM BORROW_LOG
+
+DESC LIBRARY_BOOKS;
