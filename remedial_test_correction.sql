@@ -1,0 +1,204 @@
+--Task 1: Create Table bank_accounts
+--Design a table with:
+--account_number (VARCHAR2(20)) – Primary Key
+--account_name (VARCHAR2(100))
+--balance (NUMBER(10,2))
+--Insert two sample accounts:
+--'ACC001', 'Alice Martins', balance: 5000.00
+--'ACC002', 'John Peters', balance: 3000.00
+
+
+CREATE TABLE BANK_ACCOUNTS(
+ACCOUNT_NUMBER VARCHAR2(20) PRIMARY KEY,
+ACCOUNT_NAME VARCHAR2(100),
+BALANCE NUMBER(10,2)
+);
+
+
+
+INSERT INTO BANK_ACCOUNTS(ACCOUNT_NUMBER, ACCOUNT_NAME, BALANCE)
+VALUES('ACC001', 'Alice Martins',5000);
+INSERT INTO BANK_ACCOUNTS(ACCOUNT_NUMBER, ACCOUNT_NAME, BALANCE)
+VALUES('ACC002', 'John Peters',3000);
+
+
+
+
+
+--Create a procedure that:
+--Inputs: p_account_number IN VARCHAR2, p_amount IN NUMBER
+--Action: Adds the amount to the account’s balance
+--• Validations:
+--• Account must exist
+--• Amount must be positive
+--• Outputs: Use DBMS_OUTPUT to confirm deposit or show error
+
+CREATE OR REPLACE PROCEDURE MAKE_DEPOSIT(P_ACCOUNT_NUMBER IN VARCHAR2, P_AMOUNT IN NUMBER, P_OUT OUT VARCHAR2)AS
+
+V_ACCOUNT_NUMBER VARCHAR2(50);
+V_AMOUNT NUMBER(10,2);
+
+BEGIN
+
+SELECT ACCOUNT_NUMBER, BALANCE 
+INTO V_ACCOUNT_NUMBER, V_AMOUNT FROM BANK_ACCOUNTS 
+WHERE ACCOUNT_NUMBER = P_ACCOUNT_NUMBER; -- IF ACCOUNT EXISTS
+
+        --Amount must be positive--
+IF V_AMOUNT > 0 AND P_AMOUNT > 0 THEN
+UPDATE BANK_ACCOUNTS
+--Action: Adds the amount to the account’s balance
+SET BALANCE = BALANCE + P_AMOUNT
+--• Account must exist
+WHERE ACCOUNT_NUMBER = P_ACCOUNT_NUMBER;
+P_OUT := 'DEPOSIT SUCCESSFUL';
+
+-- LOG FOR DEPOSIT --
+INSERT INTO TRANSACTION_LOG(LOG_ID, ACCOUNT_NUMBER,TRANSACTION_TYPE, AMOUNT, TRANSACTION_TIME)
+VALUES(LOG_SEQ.NEXTVAL, P_ACCOUNT_NUMBER, 'DEPOSIT', P_AMOUNT, SYSDATE);
+
+ELSE
+P_OUT := 'DEPOSIT FAILED';
+END IF;
+
+EXCEPTION 
+WHEN OTHERS THEN
+P_OUT := 'ACCOUNT DOES NOT EXIST' || SQLERRM;
+END;
+/
+
+
+
+
+--Task 3: Write Procedure make_withdrawal
+--Create a procedure that:
+--• Inputs: p_account_number IN VARCHAR2, p_amount IN NUMBER
+--• Action: Deducts amount from balance
+--• Validations:
+--• Account must exist
+--• Cannot withdraw more than balance
+--• Exception Handling:
+--• Show “Insufficient Funds” message if withdrawal exceeds balance
+--• Show “Invalid Account” if not found
+
+
+CREATE OR REPLACE PROCEDURE MAKE_WITHDRAWAL(P_ACCOUNT_NUMBER IN VARCHAR2, P_AMOUNT IN NUMBER, P_OUT OUT VARCHAR2) AS
+
+V_ACCOUNT_NUMBER VARCHAR2(50);
+V_AMOUNT NUMBER;
+--V_OUT VARCHAR2(1000);
+
+BEGIN
+
+--• Action: Deducts amount from balance
+SELECT ACCOUNT_NUMBER, BALANCE 
+INTO V_ACCOUNT_NUMBER, V_AMOUNT FROM BANK_ACCOUNTS 
+WHERE ACCOUNT_NUMBER = P_ACCOUNT_NUMBER  --• Account must exist
+AND BALANCE > P_AMOUNT; -- Cannot withdraw more than balance
+
+--• Validations:
+
+--P_OUT := V_OUT;
+
+IF V_AMOUNT > 0  AND V_AMOUNT > 0 THEN
+
+UPDATE BANK_ACCOUNTS
+SET BALANCE = BALANCE - P_AMOUNT
+WHERE ACCOUNT_NUMBER = P_ACCOUNT_NUMBER;
+--AND BALANCE > P_AMOUNT;
+
+P_OUT := 'WITHDRAWAL SUCCESSFULL!';
+
+-- LOG FOR WITHDRAWAL --
+INSERT INTO TRANSACTION_LOG(LOG_ID, ACCOUNT_NUMBER,TRANSACTION_TYPE, AMOUNT, TRANSACTION_TIME)
+VALUES(LOG_SEQ.NEXTVAL, P_ACCOUNT_NUMBER, 'WITHDRAWAL', P_AMOUNT, SYSDATE);
+
+ELSE
+P_OUT := 'INSUFFICIENT FUNDS';
+
+END IF;
+
+EXCEPTION
+WHEN NO_DATA_FOUND THEN
+P_OUT := 'INVALID ACCOUNT';
+WHEN OTHERS THEN
+P_OUT:= 'UNEXPECTED ERROR ' || SQLERRM;
+END;
+/
+
+
+
+
+--SELECT * FROM BANK_ACCOUNTS
+--SELECT * FROM TRANSACTION_LOG
+
+--Task 4: Create Table transaction_log
+--Log all deposits and withdrawals:
+--• log_id (Primary Key, use a sequence)
+--• account_number
+--• transaction_type (DEPOSIT or WITHDRAWAL)
+--• amount
+--• transaction_time (use SYSDATE)
+--Modify make_deposit and make_withdrawal to insert into this table after each
+--successful operation.
+
+CREATE SEQUENCE LOG_SEQ
+START WITH 1
+INCREMENT BY 1
+NOCACHE
+NOCYCLE
+
+CREATE TABLE TRANSACTION_LOG(
+LOG_ID NUMBER PRIMARY KEY,
+ACCOUNT_NUMBER VARCHAR2(100),
+TRANSACTION_TYPE VARCHAR2(100),
+AMOUNT NUMBER(10,2),
+TRANSACTION_TIME DATE
+);
+
+
+
+
+--Task 5: Write Anonymous Block
+--Simulate:
+--• Deposit of 1000 to 'ACC001'
+--• Withdrawal of 2000 from 'ACC002'
+--• Withdrawal of 5000 from 'ACC002' (should fail with “Insufficient
+--Funds”)
+
+
+DECLARE 
+V_ACCOUNT_NUMBER VARCHAR2(20);
+V_AMOUNT NUMBER;
+V_OUT VARCHAR2(100);
+
+BEGIN
+MAKE_DEPOSIT('ACC001', 2000, V_OUT);
+DBMS_OUTPUT.PUT_LINE(V_OUT);
+END;
+/
+
+--SELECT * FROM BANK_ACCOUNTS
+--SELECT * FROM TRANSACTION_LOG
+
+
+
+DECLARE 
+V_ACCOUNT_NUMBER VARCHAR2(100);
+V_AMOUNT NUMBER;
+V_OUT VARCHAR2(1000);
+
+BEGIN
+
+MAKE_WITHDRAWAL('ACC001', 2000, V_OUT);
+DBMS_OUTPUT.PUT_LINE(V_OUT);
+END;
+
+
+
+
+
+
+
+
+
