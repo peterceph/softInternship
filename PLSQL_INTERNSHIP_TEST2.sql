@@ -106,7 +106,7 @@ END;
 
 
 
-SELECT * FROM BANK_ACCOUNTS
+--SELECT * FROM BANK_ACCOUNTS;
 
 
 
@@ -114,53 +114,97 @@ SELECT * FROM BANK_ACCOUNTS
 --Create a function get_account_summary(p_acct_no IN VARCHAR2) RETURN VARCHAR2 that returns a string
 --summary of account name and balance.
 
-CREATE OR REPLACE FUNCTION GET_ACCOUNT_SUMMARY(P_ACCT_NO IN VARCHAR2)
+CREATE OR REPLACE FUNCTION GET_ACCOUNT_SUMMARY(P_ACCOUNT_NUMBER IN VARCHAR2)
 RETURN VARCHAR2
 AS
-V_ACCOUNT_SUMMARY NUMBER;
+V_ACCOUNT_SUMMARY VARCHAR(100);
 V_ACCOUNT_NAME VARCHAR2(100); 
 V_ACCOUNT_NUMBER VARCHAR2(100);
 V_BALANCE NUMBER(10,2);
 
 BEGIN
 
-SELECT ACCOUNT_NAME, BALANCE INTO V_ACCOUNT_NAME, V_BALANCE FROM BANK_ACCOUNTS
-WHERE ACCOUNT_NUMBER = V_ACCOUNT_NUMBER;
+SELECT ACCOUNT_NUMBER, ACCOUNT_NAME, BALANCE INTO V_ACCOUNT_NUMBER, 
+V_ACCOUNT_NAME, V_BALANCE FROM BANK_ACCOUNTS
+WHERE ACCOUNT_NUMBER = P_ACCOUNT_NUMBER;
 
-V_ACCOUNT_SUMMARY := V_ACCOUNT_NUMBER ||  V_BALANCE;
+V_ACCOUNT_SUMMARY := V_ACCOUNT_NUMBER ||'  '|| V_ACCOUNT_NAME ||'  '|| V_BALANCE;
 
-DBMS_OUTPUT.PUT_LINE(V_ACCOUNT_SUMMARY);
+--DBMS_OUTPUT.PUT_LINE(V_ACCOUNT_SUMMARY);
 
 RETURN V_ACCOUNT_SUMMARY;
 
 END;
 
 /
+
+
+
+DECLARE
+
+V_ACCOUNT_SUMMARY VARCHAR2(100);
+
+BEGIN
+V_ACCOUNT_SUMMARY := GET_ACCOUNT_SUMMARY('ACC001');
+
+DBMS_OUTPUT.PUT_LINE(V_ACCOUNT_SUMMARY);
+END;
+/
+
+
 --3. Cursor – Calculate Interest (15 Marks)
 --Use an explicit cursor to iterate through accounts and increase their balance by 5% interest. Use a FOR LOOP
 --and UPDATE statement.
 
+
+Declare
+Cursor int_cursor is 
+select  account_number, balance from bank_accounts;
+
+bank_interest  bank_accounts%rowtype;
+
+begin
+ 
+ FOR bank_interest in int_cursor LOOP
+    select count(*)into v_account from bank_accounts
+    where account_number = bank_interest.Account_number;
+    
+    if v_account > 0 then
+    update bank_accounts
+    set balance = balance + balance * 0.05;
+    dbms_output.put_line('Account '||bank_interest.Account_number|| ' exists. ');
+    else
+    dbms_output.put_line('Account '||bank_interest.Account_number|| ' does not exists. ');
+    end if;
+    end loop;
+    end;
+    /
+
+
 DECLARE 
 
-V_ACCOUNT_NUMBER BANK_ACCOUNTS.ACCOUNT_NUMBER%TYPE;
-V_BALANCE BANK_ACCOUNTS.BALANCE%TYPE;
+CURSOR BANK_INTEREST IS 
+SELECT ACCOUNT_NUMBER, BALANCE FROM BANK_ACCOUNTS;
 
 
+V_ACCOUNT_NUMBER  BANK_ACCOUNTS.ACCOUNT_NUMBER%TYPE;
+V_BALANCE   BANK_ACCOUNTS.BALANCE%TYPE;
 
-CURSOR C1 IS 
-SELECT ACCOUNT_NUMBER, BALANCE FROM BANK_ACCOUNTS
-WHERE BANK_ACCOUNTS = V_ACCOUNT_NUMBER;
-
+--V_COUNT NUMBER;
 
 BEGIN 
-FOR  i IN  C1 LOOP
-IF i > 0 THEN
-UPDATE BANK_ACCOUNT
+FOR  BANK_REC IN  BANK_INTEREST LOOP
+
+--SELECT COUNT(*) INTO V_COUNT FROM BANK_ACCOUNTS
+--WHERE ACCOUNT_NUMBER = BANK_REC.ACCOUNT_NUMBER;
+
+--IF V_COUNT > 0 THEN
+
+UPDATE BANK_ACCOUNTS
 SET BALANCE = BALANCE + BALANCE*0.05
-WHERE ACCOUNT_NUMBER = V_ACCOUNT_NUMBER;
+WHERE ACCOUNT_NUMBER = BANK_REC.ACCOUNT_NUMBER;
 
 DBMS_OUTPUT.PUT_LINE('ACCOUNT UPDATED SUCCESSFULLY!');
-END IF;
 
 END LOOP;
 
@@ -171,7 +215,7 @@ DBMS_OUTPUT.PUT_LINE('UNEXPECTED ERROR'||SQLERRM);
 END;
 /
 
-
+--SELECT * FROM BANK_ACCOUNTS
 
 --4. Trigger – Audit Transactions (20 Marks)
 --Write a trigger trg_audit_transaction that captures any UPDATE on balance and inserts into a table
