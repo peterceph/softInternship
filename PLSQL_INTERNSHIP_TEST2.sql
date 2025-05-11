@@ -349,3 +349,208 @@ END;
 
 --IN OUT FIRST PASSES A VALUE TO THE SUBPROGRAM AND THEN 
 --AND UPDATED VALUE TO THE CALLER 
+
+
+
+
+
+
+
+
+
+
+
+--Section B – APEX_JSON Tasks (50 Marks)
+--Note: These tasks assess knowledge of handling JSON data using APEX_JSON package.
+--7. Consuming JSON Input to Create Multiple Accounts (15 Marks)
+--Write a procedure create_accounts_from_json(p_json IN CLOB) that parses a JSON array of account records
+--using APEX_JSON and inserts them into bank_account table.
+--Sample Input JSON:
+--[
+--{"account_number": "ACC010", "account_name": "Sandra George", "balance": 2000},
+--{"account_number": "ACC011", "account_name": "Michael Bright", "balance": 1500}
+--]
+
+    CREATE OR REPLACE PROCEDURE CREATE_ACCOUNTS_FROM_JSON(P_JSON IN CLOB) IS 
+    
+      V_ACCOUNT_NUMBER VARCHAR2(10);
+      V_ACCOUNT_NAME VARCHAR2(100);
+      V_BALANCE NUMBER;
+      
+      BEGIN
+        --PARSE JSON INPUT ---
+      APEX_JSON.parse(P_JSON);
+      
+      -- EXTRACT VALUES FROM JSON USING APEX_JSON---
+      V_ACCOUNT_NUMBER := APEX_JSON.get_varchar2('BANK_ACCOUNT.ACCOUNT_NUMBER');
+      V_ACCOUNT_NAME := APEX_JSON.get_varchar2('BANK_ACCOUNT.ACCOUNT_NAME');
+      V_BALANCE := APEX_JSON.get_number('BANK_ACCOUNT.BALANCE');
+      
+            --INSERTING THE EXTRACTED DATA INTO THE BANK_ACCOUNTS TABLE--
+     INSERT INTO BANK_ACCOUNTS(ACCOUNT_NUMBER, ACCOUNT_NAME, BALANCE)
+     VALUES(V_ACCOUNT_NUMBER, V_ACCOUNT_NAME, V_BALANCE);
+     
+     
+     DBMS_OUTPUT.PUT_LINE('ACCOUNT CREATED SUCCESSFULLY!'||V_ACCOUNT_NUMBER);
+     
+     EXCEPTION
+     
+      WHEN OTHERS THEN
+      DBMS_OUTPUT.PUT_LINE('UNEXPECTED ERROR!'||SQLERRM);
+      
+    END;
+    /
+    
+    DECLARE 
+    
+    V_JSON CLOB := '{"BANK_ACCOUNT" : {"ACCOUNT_NUMBER": "ACC011", "ACCOUNT_NAME": "Michael Bright", "BALANCE": 1500}}';
+
+    BEGIN 
+    
+   CREATE_ACCOUNTS_FROM_JSON (V_JSON);
+   
+   END;
+   
+   SELECT * FROM BANK_ACCOUNTS;
+   
+   
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+--8. Generating JSON Output of All Accounts (15 Marks)
+--Write a function get_all_accounts_json RETURN CLOB that returns a JSON string of all bank accounts using
+--APEX_JSON.
+--Expected Output Format:
+--{
+--"accounts": [
+--{"account_number": "ACC001", "account_name": "Alice Martins", "balance": 6000},
+--{"account_number": "ACC002", "account_name": "John Peters", "balance": 3000}
+--]
+--}
+
+    CREATE OR REPLACE FUNCTION GET_ALL_ACCOUNTS_JSON
+    RETURN CLOB
+    AS
+    
+    V_JSON_GET_ACCOUNT CLOB;
+    
+    V_ACCOUNT_NUMBER VARCHAR2(10);
+    V_ACCOUNT_NAME VARCHAR2(100);
+    V_BALANCE NUMBER;
+    
+    BEGIN
+    
+    APEX_JSON.INITIALIZE_CLOB_OUTPUT;
+    
+    APEX_JSON.OPEN_OBJECT;
+    APEX_JSON.OPEN_ARRAY('ACCOUNTS');
+    
+    FOR GET_ACCOUNT IN (SELECT ACCOUNT_NUMBER, ACCOUNT_NAME, BALANCE FROM BANK_ACCOUNTS)LOOP
+    APEX_JSON.OPEN_OBJECT;
+    APEX_JSON.WRITE('ACCOUNT_NUMBER', GET_ACCOUNT.ACCOUNT_NUMBER);
+    APEX_JSON.WRITE('ACCOUNT_NAME', GET_ACCOUNT.ACCOUNT_NAME);
+    APEX_JSON.WRITE('BALANCE', GET_ACCOUNT.BALANCE);
+    APEX_JSON.CLOSE_OBJECT;
+    END LOOP;
+    
+    APEX_JSON.CLOSE_ARRAY;
+    APEX_JSON.CLOSE_OBJECT;
+    
+    V_JSON_GET_ACCOUNT := APEX_JSON.GET_CLOB_OUTPUT;
+    APEX_JSON.FREE_OUTPUT;
+    
+    RETURN V_JSON_GET_ACCOUNT;
+    END;
+    /
+    
+    
+
+    DECLARE
+    
+    V_JSON_GET_ACCOUNT CLOB;
+    
+    BEGIN
+    
+    V_JSON_GET_ACCOUNT := GET_ALL_ACCOUNTS_JSON;
+    
+    DBMS_OUTPUT.PUT_LINE( V_JSON_GET_ACCOUNT);
+    
+    END;
+    /
+    
+    
+    
+    
+--9. Generating JSON Output of All Accounts (20 Marks)
+--You called an endpoint successfully with the following response
+--{
+--"ResponseCode":200,
+--"Message":"Success",
+--"TotalRows":10,
+--"RowsInserted":6,
+--"TrxInserted":"1311894,1311827,1309233,1309571,1312002,1310298",
+--"RowsNotInserted":4,
+--"TrxNotInserted":"1312249,1312566,1311693,1312610",
+--}
+--Write a procedure the gets the “TrxInserted” and “TrxNotInserted” keys and log them intosame table while
+--identifying which was inserted and which id did not insert.
+
+CREATE OR REPLACE PROCEDURE INSERT_JSON_LOG_TRXN(P_LOG IN VARCHAR2)AS
+
+
+BEGIN
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
