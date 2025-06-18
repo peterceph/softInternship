@@ -33,31 +33,31 @@ prompt APPLICATION 105 - Student Academic Management System (STUDENT)
 -- Application Export:
 --   Application:     105
 --   Name:            Student Academic Management System (STUDENT)
---   Date and Time:   00:08 Saturday June 14, 2025
+--   Date and Time:   08:04 Wednesday June 18, 2025
 --   Exported By:     ADMIN
 --   Flashback:       0
 --   Export Type:     Application Export
---     Pages:                      5
---       Items:                   12
---       Computations:             2
---       Processes:                8
---       Regions:                  8
---       Buttons:                  6
---       Dynamic Actions:          3
+--     Pages:                     11
+--       Items:                   36
+--       Computations:             3
+--       Processes:               20
+--       Regions:                 21
+--       Buttons:                 20
+--       Dynamic Actions:         13
 --     Shared Components:
 --       Logic:
 --         Build Options:          1
 --       Navigation:
 --         Lists:                  2
 --         Breadcrumbs:            1
---           Entries:              2
+--           Entries:              5
 --       Security:
 --         Authentication:         2
 --         Authorization:          1
 --       User Interface:
 --         Themes:                 1
 --         Templates:
---         LOVs:                   2
+--         LOVs:                   5
 --       PWA:
 --       Globalization:
 --       Reports:
@@ -109,7 +109,7 @@ wwv_imp_workspace.create_flow(
 ,p_substitution_value_01=>'Student Academic Management System (STUDENT)'
 ,p_file_prefix => nvl(wwv_flow_application_install.get_static_app_file_prefix,'')
 ,p_files_version=>6
-,p_version_scn=>18264740
+,p_version_scn=>19074592
 ,p_print_server_type=>'NATIVE'
 ,p_file_storage=>'DB'
 ,p_is_pwa=>'Y'
@@ -145,7 +145,7 @@ wwv_flow_imp_shared.create_list(
  p_id=>wwv_flow_imp.id(11285629419136220)
 ,p_name=>'Navigation Menu'
 ,p_list_status=>'PUBLIC'
-,p_version_scn=>18232223
+,p_version_scn=>18999426
 );
 wwv_flow_imp_shared.create_list_item(
  p_id=>wwv_flow_imp.id(11297367739136315)
@@ -156,13 +156,40 @@ wwv_flow_imp_shared.create_list_item(
 ,p_list_item_current_type=>'TARGET_PAGE'
 );
 wwv_flow_imp_shared.create_list_item(
- p_id=>wwv_flow_imp.id(11415036777099110)
-,p_list_item_display_sequence=>20
-,p_list_item_link_text=>'Payment'
-,p_list_item_link_target=>'f?p=&APP_ID.:2:&APP_SESSION.::&DEBUG.:::'
-,p_list_item_icon=>'fa-credit-card'
+ p_id=>wwv_flow_imp.id(11493146969379301)
+,p_list_item_display_sequence=>30
+,p_list_item_link_text=>'Student Pay'
+,p_list_item_link_target=>'f?p=&APP_ID.:4:&APP_SESSION.::&DEBUG.:::'
+,p_list_item_icon=>'fa-table'
 ,p_list_item_current_type=>'COLON_DELIMITED_PAGE_LIST'
-,p_list_item_current_for_pages=>'2,3'
+,p_list_item_current_for_pages=>'4,5'
+);
+wwv_flow_imp_shared.create_list_item(
+ p_id=>wwv_flow_imp.id(11517506019484437)
+,p_list_item_display_sequence=>40
+,p_list_item_link_text=>'Registration'
+,p_list_item_link_target=>'f?p=&APP_ID.:6:&APP_SESSION.::&DEBUG.:::'
+,p_list_item_icon=>'fa-table'
+,p_list_item_current_type=>'COLON_DELIMITED_PAGE_LIST'
+,p_list_item_current_for_pages=>'6,7'
+);
+wwv_flow_imp_shared.create_list_item(
+ p_id=>wwv_flow_imp.id(11640578572295898)
+,p_list_item_display_sequence=>50
+,p_list_item_link_text=>'CGPA Summary'
+,p_list_item_link_target=>'f?p=&APP_ID.:8:&APP_SESSION.::&DEBUG.:::'
+,p_list_item_icon=>'fa-table'
+,p_list_item_current_type=>'COLON_DELIMITED_PAGE_LIST'
+,p_list_item_current_for_pages=>'8,9'
+);
+wwv_flow_imp_shared.create_list_item(
+ p_id=>wwv_flow_imp.id(11660462043036467)
+,p_list_item_display_sequence=>60
+,p_list_item_link_text=>'Exam Score'
+,p_list_item_link_target=>'f?p=&APP_ID.:10:&APP_SESSION.::&DEBUG.:::'
+,p_list_item_icon=>'fa-table'
+,p_list_item_current_type=>'COLON_DELIMITED_PAGE_LIST'
+,p_list_item_current_for_pages=>'10'
 );
 end;
 /
@@ -1033,6 +1060,38 @@ wwv_flow_imp_shared.create_static_lov_data(
 );
 end;
 /
+prompt --application/shared_components/user_interface/lovs/peter_courses_course_title
+begin
+wwv_flow_imp_shared.create_list_of_values(
+ p_id=>wwv_flow_imp.id(11510280466484412)
+,p_lov_name=>'PETER_COURSES.COURSE_TITLE'
+,p_source_type=>'TABLE'
+,p_location=>'LOCAL'
+,p_query_table=>'PETER_COURSES'
+,p_return_column_name=>'COURSE_ID'
+,p_display_column_name=>'COURSE_TITLE'
+,p_default_sort_column_name=>'COURSE_TITLE'
+,p_default_sort_direction=>'ASC'
+,p_version_scn=>18562589
+);
+end;
+/
+prompt --application/shared_components/user_interface/lovs/peter_registrations_academic_session
+begin
+wwv_flow_imp_shared.create_list_of_values(
+ p_id=>wwv_flow_imp.id(11661745162036495)
+,p_lov_name=>'PETER_REGISTRATIONS.ACADEMIC_SESSION'
+,p_source_type=>'TABLE'
+,p_location=>'LOCAL'
+,p_query_table=>'PETER_REGISTRATIONS'
+,p_return_column_name=>'REGISTRATION_ID'
+,p_display_column_name=>'ACADEMIC_SESSION'
+,p_default_sort_column_name=>'ACADEMIC_SESSION'
+,p_default_sort_direction=>'ASC'
+,p_version_scn=>18999432
+);
+end;
+/
 prompt --application/shared_components/user_interface/lovs/peter_students_full_name
 begin
 wwv_flow_imp_shared.create_list_of_values(
@@ -1043,9 +1102,27 @@ wwv_flow_imp_shared.create_list_of_values(
 ,p_query_table=>'PETER_STUDENTS'
 ,p_return_column_name=>'STUDENT_ID'
 ,p_display_column_name=>'FULL_NAME'
+,p_group_sort_direction=>'ASC'
 ,p_default_sort_column_name=>'FULL_NAME'
 ,p_default_sort_direction=>'ASC'
-,p_version_scn=>18232220
+,p_version_scn=>18734232
+);
+end;
+/
+prompt --application/shared_components/user_interface/lovs/student_name
+begin
+wwv_flow_imp_shared.create_list_of_values(
+ p_id=>wwv_flow_imp.id(11580797502374867)
+,p_lov_name=>'STUDENT_NAME'
+,p_source_type=>'TABLE'
+,p_location=>'LOCAL'
+,p_query_table=>'PETER_STUDENTS'
+,p_return_column_name=>'STUDENT_ID'
+,p_display_column_name=>'FULL_NAME'
+,p_group_sort_direction=>'ASC'
+,p_default_sort_column_name=>'FULL_NAME'
+,p_default_sort_direction=>'ASC'
+,p_version_scn=>18738623
 );
 end;
 /
@@ -1075,10 +1152,28 @@ wwv_flow_imp_shared.create_menu_option(
 ,p_page_id=>1
 );
 wwv_flow_imp_shared.create_menu_option(
- p_id=>wwv_flow_imp.id(11421033806099131)
-,p_short_name=>'Payment'
-,p_link=>'f?p=&APP_ID.:2:&APP_SESSION.::&DEBUG.:::'
-,p_page_id=>2
+ p_id=>wwv_flow_imp.id(11499197084379337)
+,p_short_name=>'Student Pay'
+,p_link=>'f?p=&APP_ID.:4:&APP_SESSION.::&DEBUG.:::'
+,p_page_id=>4
+);
+wwv_flow_imp_shared.create_menu_option(
+ p_id=>wwv_flow_imp.id(11522395294484451)
+,p_short_name=>'Registration'
+,p_link=>'f?p=&APP_ID.:6:&APP_SESSION.::&DEBUG.:::'
+,p_page_id=>6
+);
+wwv_flow_imp_shared.create_menu_option(
+ p_id=>wwv_flow_imp.id(11645632392295921)
+,p_short_name=>'CGPA Summary'
+,p_link=>'f?p=&APP_ID.:8:&APP_SESSION.::&DEBUG.:::'
+,p_page_id=>8
+);
+wwv_flow_imp_shared.create_menu_option(
+ p_id=>wwv_flow_imp.id(11661315682036478)
+,p_short_name=>'Exam Score'
+,p_link=>'f?p=&APP_ID.:10:&APP_SESSION.::&DEBUG.:::'
+,p_page_id=>10
 );
 end;
 /
@@ -1464,198 +1559,6 @@ wwv_flow_imp_page.create_page_computation(
 );
 end;
 /
-prompt --application/pages/page_00002
-begin
-wwv_flow_imp_page.create_page(
- p_id=>2
-,p_name=>'Payment'
-,p_alias=>'PAYMENT1'
-,p_step_title=>'Payment'
-,p_autocomplete_on_off=>'OFF'
-,p_page_template_options=>'#DEFAULT#'
-,p_protection_level=>'C'
-,p_page_component_map=>'18'
-);
-wwv_flow_imp_page.create_page_plug(
- p_id=>wwv_flow_imp.id(11415462259099114)
-,p_plug_name=>'Payment'
-,p_region_template_options=>'#DEFAULT#:t-IRR-region--hideHeader js-addHiddenHeadingRoleDesc'
-,p_plug_template=>2100526641005906379
-,p_plug_display_sequence=>10
-,p_query_type=>'TABLE'
-,p_query_table=>'PETER_STUDENT_PAYMENTS'
-,p_include_rowid_column=>false
-,p_plug_source_type=>'NATIVE_IR'
-,p_prn_page_header=>'Payment'
-);
-wwv_flow_imp_page.create_worksheet(
- p_id=>wwv_flow_imp.id(11415516559099114)
-,p_name=>'Payment'
-,p_max_row_count_message=>'The maximum row count for this report is #MAX_ROW_COUNT# rows.  Please apply a filter to reduce the number of records in your query.'
-,p_no_data_found_message=>'No data found.'
-,p_base_pk1=>'PAYMENT_ID'
-,p_pagination_type=>'ROWS_X_TO_Y'
-,p_pagination_display_pos=>'BOTTOM_RIGHT'
-,p_report_list_mode=>'TABS'
-,p_lazy_loading=>false
-,p_show_detail_link=>'C'
-,p_show_notify=>'Y'
-,p_download_formats=>'CSV:HTML:XLSX:PDF'
-,p_enable_mail_download=>'Y'
-,p_detail_link=>'f?p=&APP_ID.:3:&APP_SESSION.::&DEBUG.:RP:P3_PAYMENT_ID:\#PAYMENT_ID#\'
-,p_detail_link_text=>'<span role="img" aria-label="Edit" class="fa fa-edit" title="Edit"></span>'
-,p_owner=>'ADMIN'
-,p_internal_uid=>11415516559099114
-);
-wwv_flow_imp_page.create_worksheet_column(
- p_id=>wwv_flow_imp.id(11416208568099123)
-,p_db_column_name=>'PAYMENT_ID'
-,p_display_order=>0
-,p_is_primary_key=>'Y'
-,p_column_identifier=>'A'
-,p_column_label=>'Payment ID'
-,p_column_type=>'NUMBER'
-,p_display_text_as=>'HIDDEN_ESCAPE_SC'
-,p_heading_alignment=>'LEFT'
-,p_tz_dependent=>'N'
-,p_use_as_row_header=>'N'
-);
-wwv_flow_imp_page.create_worksheet_column(
- p_id=>wwv_flow_imp.id(11416671204099125)
-,p_db_column_name=>'STUDENT_ID'
-,p_display_order=>2
-,p_column_identifier=>'B'
-,p_column_label=>'Student'
-,p_column_type=>'STRING'
-,p_display_text_as=>'LOV_ESCAPE_SC'
-,p_heading_alignment=>'LEFT'
-,p_tz_dependent=>'N'
-,p_rpt_named_lov=>wwv_flow_imp.id(11405201591099084)
-,p_use_as_row_header=>'N'
-);
-wwv_flow_imp_page.create_worksheet_column(
- p_id=>wwv_flow_imp.id(11417086966099125)
-,p_db_column_name=>'PAYMENT_TYPE'
-,p_display_order=>3
-,p_column_identifier=>'C'
-,p_column_label=>'Payment Type'
-,p_column_type=>'STRING'
-,p_heading_alignment=>'LEFT'
-,p_tz_dependent=>'N'
-,p_use_as_row_header=>'N'
-);
-wwv_flow_imp_page.create_worksheet_column(
- p_id=>wwv_flow_imp.id(11417477545099125)
-,p_db_column_name=>'AMOUNT_PAID'
-,p_display_order=>4
-,p_column_identifier=>'D'
-,p_column_label=>'Amount Paid'
-,p_column_type=>'NUMBER'
-,p_heading_alignment=>'RIGHT'
-,p_column_alignment=>'RIGHT'
-,p_tz_dependent=>'N'
-,p_use_as_row_header=>'N'
-);
-wwv_flow_imp_page.create_worksheet_column(
- p_id=>wwv_flow_imp.id(11417825638099125)
-,p_db_column_name=>'REFERENCE_NUMBER'
-,p_display_order=>5
-,p_column_identifier=>'E'
-,p_column_label=>'Reference Number'
-,p_column_type=>'STRING'
-,p_heading_alignment=>'LEFT'
-,p_tz_dependent=>'N'
-,p_use_as_row_header=>'N'
-);
-wwv_flow_imp_page.create_worksheet_column(
- p_id=>wwv_flow_imp.id(11418232534099126)
-,p_db_column_name=>'SESSION'
-,p_display_order=>6
-,p_column_identifier=>'F'
-,p_column_label=>'Session'
-,p_column_type=>'STRING'
-,p_heading_alignment=>'LEFT'
-,p_tz_dependent=>'N'
-,p_use_as_row_header=>'N'
-);
-wwv_flow_imp_page.create_worksheet_column(
- p_id=>wwv_flow_imp.id(11418661526099126)
-,p_db_column_name=>'SEMESTER'
-,p_display_order=>7
-,p_column_identifier=>'G'
-,p_column_label=>'Semester'
-,p_column_type=>'STRING'
-,p_heading_alignment=>'LEFT'
-,p_tz_dependent=>'N'
-,p_use_as_row_header=>'N'
-);
-wwv_flow_imp_page.create_worksheet_column(
- p_id=>wwv_flow_imp.id(11419043342099126)
-,p_db_column_name=>'PAYMENT_DATE'
-,p_display_order=>8
-,p_column_identifier=>'H'
-,p_column_label=>'Payment Date'
-,p_column_type=>'DATE'
-,p_heading_alignment=>'LEFT'
-,p_tz_dependent=>'N'
-,p_use_as_row_header=>'N'
-);
-wwv_flow_imp_page.create_worksheet_rpt(
- p_id=>wwv_flow_imp.id(11423186797247140)
-,p_application_user=>'APXWS_DEFAULT'
-,p_report_seq=>10
-,p_report_alias=>'114232'
-,p_status=>'PUBLIC'
-,p_is_default=>'Y'
-,p_report_columns=>'PAYMENT_ID:STUDENT_ID:PAYMENT_TYPE:AMOUNT_PAID:REFERENCE_NUMBER:SESSION:SEMESTER:PAYMENT_DATE'
-);
-wwv_flow_imp_page.create_page_plug(
- p_id=>wwv_flow_imp.id(11421136496099131)
-,p_plug_name=>'Breadcrumb'
-,p_region_template_options=>'#DEFAULT#:t-BreadcrumbRegion--useBreadcrumbTitle'
-,p_component_template_options=>'#DEFAULT#'
-,p_plug_template=>2531463326621247859
-,p_plug_display_sequence=>10
-,p_plug_display_point=>'REGION_POSITION_01'
-,p_menu_id=>wwv_flow_imp.id(11285179723136217)
-,p_plug_source_type=>'NATIVE_BREADCRUMB'
-,p_menu_template_id=>4072363345357175094
-);
-wwv_flow_imp_page.create_page_button(
- p_id=>wwv_flow_imp.id(11419549484099126)
-,p_button_sequence=>10
-,p_button_plug_id=>wwv_flow_imp.id(11415462259099114)
-,p_button_name=>'CREATE'
-,p_button_action=>'REDIRECT_PAGE'
-,p_button_template_options=>'#DEFAULT#'
-,p_button_template_id=>4072362960822175091
-,p_button_is_hot=>'Y'
-,p_button_image_alt=>'Create'
-,p_button_position=>'RIGHT_OF_IR_SEARCH_BAR'
-,p_button_redirect_url=>'f?p=&APP_ID.:3:&APP_SESSION.::&DEBUG.:3::'
-);
-wwv_flow_imp_page.create_page_da_event(
- p_id=>wwv_flow_imp.id(11419827588099128)
-,p_name=>'Edit Report - Dialog Closed'
-,p_event_sequence=>10
-,p_triggering_element_type=>'REGION'
-,p_triggering_region_id=>wwv_flow_imp.id(11415462259099114)
-,p_bind_type=>'bind'
-,p_execution_type=>'IMMEDIATE'
-,p_bind_event_type=>'apexafterclosedialog'
-);
-wwv_flow_imp_page.create_page_da_action(
- p_id=>wwv_flow_imp.id(11420310085099129)
-,p_event_id=>wwv_flow_imp.id(11419827588099128)
-,p_event_result=>'TRUE'
-,p_action_sequence=>10
-,p_execute_on_page_init=>'N'
-,p_action=>'NATIVE_REFRESH'
-,p_affected_elements_type=>'REGION'
-,p_affected_region_id=>wwv_flow_imp.id(11415462259099114)
-);
-end;
-/
 prompt --application/pages/page_00003
 begin
 wwv_flow_imp_page.create_page(
@@ -1678,13 +1581,26 @@ wwv_flow_imp_page.create_page_plug(
 ,p_region_template_options=>'#DEFAULT#'
 ,p_plug_template=>4501440665235496320
 ,p_plug_display_sequence=>10
-,p_query_type=>'TABLE'
-,p_query_table=>'PETER_STUDENT_PAYMENTS'
-,p_include_rowid_column=>false
+,p_query_type=>'SQL'
+,p_plug_source=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'select p.PAYMENT_ID,',
+'       p.STUDENT_ID,',
+'       p.PAYMENT_TYPE,',
+'       p.AMOUNT_PAID,',
+'       p.REFERENCE_NUMBER,',
+'       p."SESSION",',
+'       p.SEMESTER,',
+'       p.PAYMENT_DATE',
+'  from PETER_STUDENT_PAYMENTS p         ',
+'  JOIN peter_students s on ',
+'  p.student_id = s.student_id',
+'  where upper(username) = upper(:APP_USER)',
+''))
 ,p_is_editable=>true
 ,p_edit_operations=>'i:u:d'
 ,p_lost_update_check_type=>'VALUES'
 ,p_plug_source_type=>'NATIVE_FORM'
+,p_ajax_items_to_submit=>'P3_STUDENT_ID'
 );
 wwv_flow_imp_page.create_page_plug(
  p_id=>wwv_flow_imp.id(11410614902099101)
@@ -1739,7 +1655,6 @@ wwv_flow_imp_page.create_page_button(
 ,p_button_is_hot=>'Y'
 ,p_button_image_alt=>'Apply Changes'
 ,p_button_position=>'NEXT'
-,p_button_alignment=>'RIGHT'
 ,p_button_condition=>'P3_PAYMENT_ID'
 ,p_button_condition_type=>'ITEM_IS_NOT_NULL'
 ,p_database_action=>'UPDATE'
@@ -1755,7 +1670,6 @@ wwv_flow_imp_page.create_page_button(
 ,p_button_is_hot=>'Y'
 ,p_button_image_alt=>'Create'
 ,p_button_position=>'NEXT'
-,p_button_alignment=>'RIGHT'
 ,p_button_condition=>'P3_PAYMENT_ID'
 ,p_button_condition_type=>'ITEM_IS_NULL'
 ,p_database_action=>'INSERT'
@@ -1786,25 +1700,26 @@ wwv_flow_imp_page.create_page_item(
  p_id=>wwv_flow_imp.id(11405193212099082)
 ,p_name=>'P3_STUDENT_ID'
 ,p_source_data_type=>'NUMBER'
+,p_is_required=>true
 ,p_item_sequence=>20
 ,p_item_plug_id=>wwv_flow_imp.id(11404437425099071)
 ,p_item_source_plug_id=>wwv_flow_imp.id(11404437425099071)
-,p_use_cache_before_default=>'NO'
 ,p_prompt=>'Student Id'
 ,p_source=>'STUDENT_ID'
 ,p_source_type=>'REGION_SOURCE_COLUMN'
 ,p_display_as=>'NATIVE_SELECT_LIST'
-,p_named_lov=>'PETER_STUDENTS.FULL_NAME'
+,p_lov=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'select     ',
+'full_name d,',
+'student_id r     ',
+'from peter_students',
+'where upper(username) = upper(:App_User)'))
 ,p_lov_display_null=>'YES'
-,p_cSize=>32
-,p_cMaxlength=>255
 ,p_cHeight=>1
-,p_label_alignment=>'RIGHT'
 ,p_field_template=>1609121967514267634
 ,p_item_template_options=>'#DEFAULT#'
-,p_is_persistent=>'N'
+,p_lov_display_extra=>'YES'
 ,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
-  'execute_validations', 'Y',
   'page_action_on_selection', 'NONE')).to_clob
 );
 wwv_flow_imp_page.create_page_item(
@@ -1871,28 +1786,27 @@ wwv_flow_imp_page.create_page_item(
  p_id=>wwv_flow_imp.id(11407016094099096)
 ,p_name=>'P3_SESSION'
 ,p_source_data_type=>'VARCHAR2'
+,p_is_required=>true
 ,p_item_sequence=>60
 ,p_item_plug_id=>wwv_flow_imp.id(11404437425099071)
 ,p_item_source_plug_id=>wwv_flow_imp.id(11404437425099071)
+,p_item_default=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'SELECT REPLACE("SESSION", ''&#x2F;'', ''/'') AS "SESSION"',
+'FROM Peter_students'))
+,p_item_default_type=>'SQL_QUERY'
 ,p_prompt=>'Session'
 ,p_source=>'SESSION'
 ,p_source_type=>'REGION_SOURCE_COLUMN'
-,p_display_as=>'NATIVE_DISPLAY_ONLY'
-,p_lov=>wwv_flow_string.join(wwv_flow_t_varchar2(
-'SELECT "SESSION" d,',
-'"SESSION" r',
-'FROM peter_student_payments',
-'WHERE student_id = :P3_STUDENT_ID',
-'AND rownum = 1'))
+,p_display_as=>'NATIVE_TEXT_FIELD'
+,p_cSize=>30
 ,p_field_template=>1609121967514267634
 ,p_item_template_options=>'#DEFAULT#'
-,p_is_persistent=>'N'
-,p_lov_display_extra=>'YES'
+,p_protection_level=>'S'
 ,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
-  'based_on', 'VALUE',
-  'format', 'PLAIN',
-  'send_on_page_submit', 'Y',
-  'show_line_breaks', 'Y')).to_clob
+  'disabled', 'N',
+  'submit_when_enter_pressed', 'N',
+  'subtype', 'TEXT',
+  'trim_spaces', 'BOTH')).to_clob
 );
 wwv_flow_imp_page.create_page_item(
  p_id=>wwv_flow_imp.id(11407480649099096)
@@ -1904,22 +1818,17 @@ wwv_flow_imp_page.create_page_item(
 ,p_prompt=>'Semester'
 ,p_source=>'SEMESTER'
 ,p_source_type=>'REGION_SOURCE_COLUMN'
-,p_display_as=>'NATIVE_DISPLAY_ONLY'
-,p_lov=>wwv_flow_string.join(wwv_flow_t_varchar2(
-'SELECT SEMESTER d,',
-'SEMESTER r',
-'FROM peter_student_payments',
-'WHERE student_id = :P3_STUDENT_ID',
-'AND rownum = 1'))
+,p_display_as=>'NATIVE_TEXT_FIELD'
+,p_cSize=>30
 ,p_field_template=>1609121967514267634
 ,p_item_template_options=>'#DEFAULT#'
 ,p_is_persistent=>'N'
-,p_lov_display_extra=>'YES'
+,p_protection_level=>'S'
 ,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
-  'based_on', 'LOV',
-  'format', 'PLAIN',
-  'send_on_page_submit', 'Y',
-  'show_line_breaks', 'Y')).to_clob
+  'disabled', 'N',
+  'submit_when_enter_pressed', 'N',
+  'subtype', 'TEXT',
+  'trim_spaces', 'BOTH')).to_clob
 );
 wwv_flow_imp_page.create_page_item(
  p_id=>wwv_flow_imp.id(11407891529099096)
@@ -1951,16 +1860,6 @@ wwv_flow_imp_page.create_page_item(
   'show_time', 'N',
   'use_defaults', 'Y')).to_clob
 );
-wwv_flow_imp_page.create_page_computation(
- p_id=>wwv_flow_imp.id(11301581657259808)
-,p_computation_sequence=>10
-,p_computation_item=>'P3_PAYMENT_ID'
-,p_computation_point=>'AFTER_HEADER'
-,p_computation_type=>'QUERY'
-,p_computation=>wwv_flow_string.join(wwv_flow_t_varchar2(
-'SELECT student_id FROM peter_students WHERE upper(username) = upper(:APP_USER)',
-''))
-);
 wwv_flow_imp_page.create_page_da_event(
  p_id=>wwv_flow_imp.id(11411106642099101)
 ,p_name=>'Cancel Dialog'
@@ -1980,9 +1879,41 @@ wwv_flow_imp_page.create_page_da_action(
 ,p_action=>'NATIVE_DIALOG_CANCEL'
 );
 wwv_flow_imp_page.create_page_da_event(
- p_id=>wwv_flow_imp.id(11302122929259814)
+ p_id=>wwv_flow_imp.id(11303342943259826)
 ,p_name=>'New'
 ,p_event_sequence=>20
+,p_triggering_element_type=>'ITEM'
+,p_triggering_element=>'P3_PAYMENT_ID'
+,p_bind_type=>'bind'
+,p_execution_type=>'IMMEDIATE'
+,p_bind_event_type=>'change'
+);
+wwv_flow_imp_page.create_page_da_action(
+ p_id=>wwv_flow_imp.id(11303488473259827)
+,p_event_id=>wwv_flow_imp.id(11303342943259826)
+,p_event_result=>'TRUE'
+,p_action_sequence=>10
+,p_execute_on_page_init=>'N'
+,p_action=>'NATIVE_SET_VALUE'
+,p_affected_elements_type=>'ITEM'
+,p_affected_elements=>'P3_SESSION,P3_SEMESTER'
+,p_attribute_01=>'SQL_STATEMENT'
+,p_attribute_03=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'SELECT "SESSION", SEMESTER',
+'FROM PETER_REGISTRATIONS',
+'WHERE STUDENT_ID = :P3_STUDENT_ID',
+'AND ROWNUM = 1'))
+,p_attribute_07=>'P3_STUDENT_ID'
+,p_attribute_08=>'Y'
+,p_attribute_09=>'N'
+,p_wait_for_result=>'Y'
+,p_client_condition_type=>'NOT_NULL'
+,p_client_condition_element=>'P3_STUDENT_ID'
+);
+wwv_flow_imp_page.create_page_da_event(
+ p_id=>wwv_flow_imp.id(11304952637259842)
+,p_name=>'New_1'
+,p_event_sequence=>30
 ,p_triggering_element_type=>'ITEM'
 ,p_triggering_element=>'P3_STUDENT_ID'
 ,p_bind_type=>'bind'
@@ -1990,8 +1921,8 @@ wwv_flow_imp_page.create_page_da_event(
 ,p_bind_event_type=>'change'
 );
 wwv_flow_imp_page.create_page_da_action(
- p_id=>wwv_flow_imp.id(11302281208259815)
-,p_event_id=>wwv_flow_imp.id(11302122929259814)
+ p_id=>wwv_flow_imp.id(11305027639259843)
+,p_event_id=>wwv_flow_imp.id(11304952637259842)
 ,p_event_result=>'TRUE'
 ,p_action_sequence=>10
 ,p_execute_on_page_init=>'Y'
@@ -2000,12 +1931,49 @@ wwv_flow_imp_page.create_page_da_action(
 ,p_affected_elements=>'P3_SESSION,P3_SEMESTER'
 ,p_attribute_01=>'SQL_STATEMENT'
 ,p_attribute_03=>wwv_flow_string.join(wwv_flow_t_varchar2(
-'SELECT "SESSION", SEMESTER',
-'FROM peter_student_payments',
-'WHERE student_id = :P3_STUDENT_ID',
-'AND rownum = 1'))
+'SELECT ',
+'    MAX(REPLACE(s."SESSION", ''&#x2F;'', ''/'')) AS "SESSION",',
+'    MAX(c.SEMESTER) AS SEMESTER',
+'FROM ',
+'    peter_courses c',
+'JOIN ',
+'    peter_students s ON s.department_id = c.department_id',
+'WHERE ',
+'    s.student_id = :P3_STUDENT_ID',
+'',
+''))
 ,p_attribute_07=>'P3_STUDENT_ID'
-,p_attribute_08=>'Y'
+,p_attribute_08=>'N'
+,p_attribute_09=>'N'
+,p_wait_for_result=>'Y'
+);
+wwv_flow_imp_page.create_page_da_event(
+ p_id=>wwv_flow_imp.id(11556344684903708)
+,p_name=>'New_2'
+,p_event_sequence=>40
+,p_triggering_element_type=>'ITEM'
+,p_triggering_element=>'P3_PAYMENT_TYPE'
+,p_bind_type=>'bind'
+,p_execution_type=>'IMMEDIATE'
+,p_bind_event_type=>'change'
+);
+wwv_flow_imp_page.create_page_da_action(
+ p_id=>wwv_flow_imp.id(11556400443903709)
+,p_event_id=>wwv_flow_imp.id(11556344684903708)
+,p_event_result=>'TRUE'
+,p_action_sequence=>10
+,p_execute_on_page_init=>'Y'
+,p_action=>'NATIVE_SET_VALUE'
+,p_affected_elements_type=>'ITEM'
+,p_affected_elements=>'P3_AMOUNT_PAID'
+,p_attribute_01=>'SQL_STATEMENT'
+,p_attribute_03=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'select',
+'required_amount from ',
+'payment_requirements',
+'where PAYMENT_TYPE = :P3_PAYMENT_TYPE'))
+,p_attribute_07=>'P3_PAYMENT_TYPE'
+,p_attribute_08=>'N'
 ,p_attribute_09=>'N'
 ,p_wait_for_result=>'Y'
 );
@@ -2021,6 +1989,7 @@ wwv_flow_imp_page.create_page_process(
 ,p_attribute_06=>'Y'
 ,p_attribute_08=>'Y'
 ,p_error_display_location=>'INLINE_IN_NOTIFICATION'
+,p_process_when_button_id=>wwv_flow_imp.id(11412429069099104)
 ,p_internal_uid=>11414083077099107
 );
 wwv_flow_imp_page.create_page_process(
@@ -2049,11 +2018,11 @@ wwv_flow_imp_page.create_page_process(
 ,p_process_sequence=>60
 ,p_process_point=>'ON_SUBMIT_BEFORE_COMPUTATION'
 ,p_process_type=>'NATIVE_PLSQL'
-,p_process_name=>'New'
+,p_process_name=>'New_Pay'
 ,p_process_sql_clob=>wwv_flow_string.join(wwv_flow_t_varchar2(
-'',
 'BEGIN',
-'PAYMENT_PKG."INS_PETER_STUDENT_PAYMENTS" (',
+'',
+'PAYMENT_PKG.INS_PETER_STUDENT_PAYMENTS (',
 '      "P_PAYMENT_ID"       => :P3_PAYMENT_ID,',
 '      "P_STUDENT_ID"       => :P3_STUDENT_ID,',
 '      "P_PAYMENT_TYPE"     => :P3_PAYMENT_TYPE,',
@@ -2067,7 +2036,1904 @@ wwv_flow_imp_page.create_page_process(
 ,p_process_clob_language=>'PLSQL'
 ,p_error_display_location=>'INLINE_IN_NOTIFICATION'
 ,p_process_when_button_id=>wwv_flow_imp.id(11413267902099106)
+,p_process_when=>'P3_PAYMENT_ID'
+,p_process_when_type=>'ITEM_IS_NULL'
 ,p_internal_uid=>11301874978259811
+);
+wwv_flow_imp_page.create_page_process(
+ p_id=>wwv_flow_imp.id(11303595425259828)
+,p_process_sequence=>60
+,p_process_point=>'ON_SUBMIT_BEFORE_COMPUTATION'
+,p_region_id=>wwv_flow_imp.id(11404437425099071)
+,p_process_type=>'NATIVE_FORM_DML'
+,p_process_name=>'Update_pay'
+,p_attribute_01=>'REGION_SOURCE'
+,p_attribute_05=>'Y'
+,p_attribute_06=>'Y'
+,p_attribute_08=>'Y'
+,p_error_display_location=>'INLINE_IN_NOTIFICATION'
+,p_process_when_button_id=>wwv_flow_imp.id(11412825833099106)
+,p_process_when=>'P3_PAYMENT_ID'
+,p_process_when_type=>'ITEM_IS_NOT_NULL'
+,p_internal_uid=>11303595425259828
+);
+end;
+/
+prompt --application/pages/page_00004
+begin
+wwv_flow_imp_page.create_page(
+ p_id=>4
+,p_name=>'Student Pay'
+,p_alias=>'STUDENT-PAY'
+,p_step_title=>'Student Pay'
+,p_autocomplete_on_off=>'OFF'
+,p_page_template_options=>'#DEFAULT#'
+,p_protection_level=>'C'
+,p_page_component_map=>'18'
+);
+wwv_flow_imp_page.create_page_plug(
+ p_id=>wwv_flow_imp.id(11303626231259829)
+,p_plug_name=>'PAY PORTAL'
+,p_region_template_options=>'#DEFAULT#:t-Region--scrollBody'
+,p_plug_template=>4072358936313175081
+,p_plug_display_sequence=>10
+,p_query_type=>'TABLE'
+,p_query_table=>'PAYMENT_REQUIREMENTS'
+,p_include_rowid_column=>false
+,p_is_editable=>false
+,p_plug_source_type=>'NATIVE_FORM'
+);
+wwv_flow_imp_page.create_page_plug(
+ p_id=>wwv_flow_imp.id(11493518913379323)
+,p_plug_name=>'Student Pay'
+,p_region_template_options=>'#DEFAULT#:t-IRR-region--hideHeader js-addHiddenHeadingRoleDesc'
+,p_plug_template=>2100526641005906379
+,p_plug_display_sequence=>20
+,p_query_type=>'TABLE'
+,p_query_table=>'PETER_STUDENT_PAYMENTS'
+,p_include_rowid_column=>false
+,p_plug_source_type=>'NATIVE_IR'
+,p_prn_page_header=>'Student Pay'
+);
+wwv_flow_imp_page.create_worksheet(
+ p_id=>wwv_flow_imp.id(11493603313379323)
+,p_name=>'Student Pay'
+,p_max_row_count_message=>'The maximum row count for this report is #MAX_ROW_COUNT# rows.  Please apply a filter to reduce the number of records in your query.'
+,p_no_data_found_message=>'No data found.'
+,p_base_pk1=>'PAYMENT_ID'
+,p_pagination_type=>'ROWS_X_TO_Y'
+,p_pagination_display_pos=>'BOTTOM_RIGHT'
+,p_report_list_mode=>'TABS'
+,p_lazy_loading=>false
+,p_show_detail_link=>'C'
+,p_show_notify=>'Y'
+,p_download_formats=>'CSV:HTML:XLSX:PDF'
+,p_enable_mail_download=>'Y'
+,p_detail_link=>'f?p=&APP_ID.:5:&APP_SESSION.::&DEBUG.:RP:P5_PAYMENT_ID:\#PAYMENT_ID#\'
+,p_detail_link_text=>'<span role="img" aria-label="Edit" class="fa fa-edit" title="Edit"></span>'
+,p_owner=>'ADMIN'
+,p_internal_uid=>11493603313379323
+);
+wwv_flow_imp_page.create_worksheet_column(
+ p_id=>wwv_flow_imp.id(11494332754379329)
+,p_db_column_name=>'PAYMENT_ID'
+,p_display_order=>0
+,p_is_primary_key=>'Y'
+,p_column_identifier=>'A'
+,p_column_label=>'Payment ID'
+,p_column_type=>'NUMBER'
+,p_display_text_as=>'HIDDEN_ESCAPE_SC'
+,p_heading_alignment=>'LEFT'
+,p_tz_dependent=>'N'
+,p_use_as_row_header=>'N'
+);
+wwv_flow_imp_page.create_worksheet_column(
+ p_id=>wwv_flow_imp.id(11494777565379331)
+,p_db_column_name=>'STUDENT_ID'
+,p_display_order=>2
+,p_column_identifier=>'B'
+,p_column_label=>'Student'
+,p_column_type=>'STRING'
+,p_display_text_as=>'LOV_ESCAPE_SC'
+,p_heading_alignment=>'LEFT'
+,p_tz_dependent=>'N'
+,p_rpt_named_lov=>wwv_flow_imp.id(11405201591099084)
+,p_use_as_row_header=>'N'
+);
+wwv_flow_imp_page.create_worksheet_column(
+ p_id=>wwv_flow_imp.id(11495132592379331)
+,p_db_column_name=>'PAYMENT_TYPE'
+,p_display_order=>3
+,p_column_identifier=>'C'
+,p_column_label=>'Payment Type'
+,p_column_type=>'STRING'
+,p_heading_alignment=>'LEFT'
+,p_tz_dependent=>'N'
+,p_use_as_row_header=>'N'
+);
+wwv_flow_imp_page.create_worksheet_column(
+ p_id=>wwv_flow_imp.id(11495515408379332)
+,p_db_column_name=>'AMOUNT_PAID'
+,p_display_order=>4
+,p_column_identifier=>'D'
+,p_column_label=>'Amount Paid'
+,p_column_type=>'NUMBER'
+,p_heading_alignment=>'RIGHT'
+,p_column_alignment=>'RIGHT'
+,p_tz_dependent=>'N'
+,p_use_as_row_header=>'N'
+);
+wwv_flow_imp_page.create_worksheet_column(
+ p_id=>wwv_flow_imp.id(11495934628379332)
+,p_db_column_name=>'REFERENCE_NUMBER'
+,p_display_order=>5
+,p_column_identifier=>'E'
+,p_column_label=>'Reference Number'
+,p_column_type=>'STRING'
+,p_heading_alignment=>'LEFT'
+,p_tz_dependent=>'N'
+,p_use_as_row_header=>'N'
+);
+wwv_flow_imp_page.create_worksheet_column(
+ p_id=>wwv_flow_imp.id(11496398321379332)
+,p_db_column_name=>'SESSION'
+,p_display_order=>6
+,p_column_identifier=>'F'
+,p_column_label=>'Session'
+,p_column_type=>'STRING'
+,p_heading_alignment=>'LEFT'
+,p_tz_dependent=>'N'
+,p_use_as_row_header=>'N'
+);
+wwv_flow_imp_page.create_worksheet_column(
+ p_id=>wwv_flow_imp.id(11496751515379332)
+,p_db_column_name=>'SEMESTER'
+,p_display_order=>7
+,p_column_identifier=>'G'
+,p_column_label=>'Semester'
+,p_column_type=>'STRING'
+,p_heading_alignment=>'LEFT'
+,p_tz_dependent=>'N'
+,p_use_as_row_header=>'N'
+);
+wwv_flow_imp_page.create_worksheet_column(
+ p_id=>wwv_flow_imp.id(11497177151379334)
+,p_db_column_name=>'PAYMENT_DATE'
+,p_display_order=>8
+,p_column_identifier=>'H'
+,p_column_label=>'Payment Date'
+,p_column_type=>'DATE'
+,p_heading_alignment=>'LEFT'
+,p_tz_dependent=>'N'
+,p_use_as_row_header=>'N'
+);
+wwv_flow_imp_page.create_worksheet_rpt(
+ p_id=>wwv_flow_imp.id(11502413995433323)
+,p_application_user=>'APXWS_DEFAULT'
+,p_report_seq=>10
+,p_report_alias=>'115025'
+,p_status=>'PUBLIC'
+,p_is_default=>'Y'
+,p_report_columns=>'PAYMENT_ID:STUDENT_ID:PAYMENT_TYPE:AMOUNT_PAID:REFERENCE_NUMBER:SESSION:SEMESTER:PAYMENT_DATE'
+);
+wwv_flow_imp_page.create_page_plug(
+ p_id=>wwv_flow_imp.id(11499274003379339)
+,p_plug_name=>'Breadcrumb'
+,p_region_template_options=>'#DEFAULT#:t-BreadcrumbRegion--useBreadcrumbTitle'
+,p_component_template_options=>'#DEFAULT#'
+,p_plug_template=>2531463326621247859
+,p_plug_display_sequence=>10
+,p_plug_display_point=>'REGION_POSITION_01'
+,p_menu_id=>wwv_flow_imp.id(11285179723136217)
+,p_plug_source_type=>'NATIVE_BREADCRUMB'
+,p_menu_template_id=>4072363345357175094
+);
+wwv_flow_imp_page.create_page_button(
+ p_id=>wwv_flow_imp.id(11497682355379334)
+,p_button_sequence=>10
+,p_button_plug_id=>wwv_flow_imp.id(11493518913379323)
+,p_button_name=>'CREATE'
+,p_button_action=>'REDIRECT_PAGE'
+,p_button_template_options=>'#DEFAULT#'
+,p_button_template_id=>4072362960822175091
+,p_button_is_hot=>'Y'
+,p_button_image_alt=>'Create'
+,p_button_position=>'RIGHT_OF_IR_SEARCH_BAR'
+,p_button_redirect_url=>'f?p=&APP_ID.:3:&SESSION.::&DEBUG.:3::'
+);
+wwv_flow_imp_page.create_page_item(
+ p_id=>wwv_flow_imp.id(11303838443259831)
+,p_name=>'P4_PAYMENT_REQUIREMENT_ID'
+,p_source_data_type=>'NUMBER'
+,p_is_primary_key=>true
+,p_is_query_only=>true
+,p_item_sequence=>10
+,p_item_plug_id=>wwv_flow_imp.id(11303626231259829)
+,p_item_source_plug_id=>wwv_flow_imp.id(11303626231259829)
+,p_source=>'PAYMENT_REQUIREMENT_ID'
+,p_source_type=>'REGION_SOURCE_COLUMN'
+,p_display_as=>'NATIVE_HIDDEN'
+,p_is_persistent=>'N'
+,p_protection_level=>'S'
+,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
+  'value_protected', 'Y')).to_clob
+);
+wwv_flow_imp_page.create_page_item(
+ p_id=>wwv_flow_imp.id(11303934394259832)
+,p_name=>'P4_PAYMENT_TYPE'
+,p_source_data_type=>'VARCHAR2'
+,p_item_sequence=>20
+,p_item_plug_id=>wwv_flow_imp.id(11303626231259829)
+,p_item_source_plug_id=>wwv_flow_imp.id(11303626231259829)
+,p_prompt=>'Payment Type'
+,p_source=>'PAYMENT_TYPE'
+,p_source_type=>'REGION_SOURCE_COLUMN'
+,p_display_as=>'NATIVE_SELECT_LIST'
+,p_named_lov=>'PAYMENT_TYPE'
+,p_lov=>'.'||wwv_flow_imp.id(11423952569261643)||'.'
+,p_lov_display_null=>'YES'
+,p_cHeight=>1
+,p_field_template=>1609121967514267634
+,p_item_template_options=>'#DEFAULT#'
+,p_is_persistent=>'N'
+,p_lov_display_extra=>'YES'
+,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
+  'page_action_on_selection', 'NONE')).to_clob
+);
+wwv_flow_imp_page.create_page_item(
+ p_id=>wwv_flow_imp.id(11304057572259833)
+,p_name=>'P4_REQUIRED_AMOUNT'
+,p_source_data_type=>'NUMBER'
+,p_item_sequence=>30
+,p_item_plug_id=>wwv_flow_imp.id(11303626231259829)
+,p_item_source_plug_id=>wwv_flow_imp.id(11303626231259829)
+,p_prompt=>'Required Amount'
+,p_source=>'REQUIRED_AMOUNT'
+,p_source_type=>'REGION_SOURCE_COLUMN'
+,p_display_as=>'NATIVE_NUMBER_FIELD'
+,p_cSize=>30
+,p_field_template=>1609121967514267634
+,p_item_template_options=>'#DEFAULT#'
+,p_is_persistent=>'N'
+,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
+  'number_alignment', 'left',
+  'virtual_keyboard', 'decimal')).to_clob
+);
+wwv_flow_imp_page.create_page_da_event(
+ p_id=>wwv_flow_imp.id(11497977156379334)
+,p_name=>'Edit Report - Dialog Closed'
+,p_event_sequence=>10
+,p_triggering_element_type=>'REGION'
+,p_triggering_region_id=>wwv_flow_imp.id(11493518913379323)
+,p_bind_type=>'bind'
+,p_execution_type=>'IMMEDIATE'
+,p_bind_event_type=>'apexafterclosedialog'
+);
+wwv_flow_imp_page.create_page_da_action(
+ p_id=>wwv_flow_imp.id(11498432184379335)
+,p_event_id=>wwv_flow_imp.id(11497977156379334)
+,p_event_result=>'TRUE'
+,p_action_sequence=>10
+,p_execute_on_page_init=>'N'
+,p_action=>'NATIVE_REFRESH'
+,p_affected_elements_type=>'REGION'
+,p_affected_region_id=>wwv_flow_imp.id(11493518913379323)
+);
+wwv_flow_imp_page.create_page_da_event(
+ p_id=>wwv_flow_imp.id(11304179889259834)
+,p_name=>'New'
+,p_event_sequence=>20
+,p_triggering_element_type=>'ITEM'
+,p_triggering_element=>'P4_PAYMENT_TYPE'
+,p_bind_type=>'bind'
+,p_execution_type=>'IMMEDIATE'
+,p_bind_event_type=>'change'
+);
+wwv_flow_imp_page.create_page_da_action(
+ p_id=>wwv_flow_imp.id(11304267982259835)
+,p_event_id=>wwv_flow_imp.id(11304179889259834)
+,p_event_result=>'TRUE'
+,p_action_sequence=>10
+,p_execute_on_page_init=>'Y'
+,p_action=>'NATIVE_SET_VALUE'
+,p_affected_elements_type=>'ITEM'
+,p_affected_elements=>'P4_REQUIRED_AMOUNT'
+,p_attribute_01=>'SQL_STATEMENT'
+,p_attribute_03=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'SELECT required_amount d,',
+'required_amount r',
+'FROM payment_requirements ',
+'WHERE payment_type = :P4_PAYMENT_TYPE'))
+,p_attribute_07=>'P4_REQUIRED_AMOUNT,P4_PAYMENT_TYPE'
+,p_attribute_08=>'Y'
+,p_attribute_09=>'N'
+,p_wait_for_result=>'Y'
+);
+wwv_flow_imp_page.create_page_process(
+ p_id=>wwv_flow_imp.id(11303768583259830)
+,p_process_sequence=>10
+,p_process_point=>'BEFORE_HEADER'
+,p_region_id=>wwv_flow_imp.id(11303626231259829)
+,p_process_type=>'NATIVE_FORM_INIT'
+,p_process_name=>'Initialize form Student Pay'
+,p_internal_uid=>11303768583259830
+);
+end;
+/
+prompt --application/pages/page_00005
+begin
+wwv_flow_imp_page.create_page(
+ p_id=>5
+,p_name=>'Pay'
+,p_alias=>'PAY'
+,p_page_mode=>'MODAL'
+,p_step_title=>'Pay'
+,p_autocomplete_on_off=>'OFF'
+,p_step_template=>1661186590416509825
+,p_page_template_options=>'#DEFAULT#:js-dialog-class-t-Drawer--pullOutEnd'
+,p_dialog_chained=>'N'
+,p_dialog_resizable=>'Y'
+,p_protection_level=>'C'
+,p_page_component_map=>'02'
+);
+wwv_flow_imp_page.create_page_plug(
+ p_id=>wwv_flow_imp.id(11482809889379273)
+,p_plug_name=>'Pay'
+,p_region_template_options=>'#DEFAULT#'
+,p_plug_template=>4501440665235496320
+,p_plug_display_sequence=>10
+,p_query_type=>'TABLE'
+,p_query_table=>'PETER_STUDENT_PAYMENTS'
+,p_include_rowid_column=>false
+,p_is_editable=>true
+,p_edit_operations=>'i:u:d'
+,p_lost_update_check_type=>'VALUES'
+,p_plug_source_type=>'NATIVE_FORM'
+);
+wwv_flow_imp_page.create_page_plug(
+ p_id=>wwv_flow_imp.id(11488771203379293)
+,p_plug_name=>'Buttons'
+,p_region_template_options=>'#DEFAULT#'
+,p_plug_template=>2126429139436695430
+,p_plug_display_sequence=>20
+,p_plug_display_point=>'REGION_POSITION_03'
+,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
+  'expand_shortcuts', 'N',
+  'output_as', 'TEXT',
+  'show_line_breaks', 'Y')).to_clob
+);
+wwv_flow_imp_page.create_page_button(
+ p_id=>wwv_flow_imp.id(11489150185379293)
+,p_button_sequence=>10
+,p_button_plug_id=>wwv_flow_imp.id(11488771203379293)
+,p_button_name=>'CANCEL'
+,p_button_action=>'DEFINED_BY_DA'
+,p_button_template_options=>'#DEFAULT#'
+,p_button_template_id=>4072362960822175091
+,p_button_image_alt=>'Cancel'
+,p_button_position=>'CLOSE'
+,p_button_alignment=>'RIGHT'
+);
+wwv_flow_imp_page.create_page_button(
+ p_id=>wwv_flow_imp.id(11490547617379298)
+,p_button_sequence=>20
+,p_button_plug_id=>wwv_flow_imp.id(11488771203379293)
+,p_button_name=>'DELETE'
+,p_button_action=>'SUBMIT'
+,p_button_template_options=>'#DEFAULT#'
+,p_button_template_id=>4072362960822175091
+,p_button_image_alt=>'Delete'
+,p_button_position=>'DELETE'
+,p_button_alignment=>'RIGHT'
+,p_button_execute_validations=>'N'
+,p_confirm_message=>'&APP_TEXT$DELETE_MSG!RAW.'
+,p_confirm_style=>'danger'
+,p_button_condition=>'P5_PAYMENT_ID'
+,p_button_condition_type=>'ITEM_IS_NOT_NULL'
+,p_database_action=>'DELETE'
+);
+wwv_flow_imp_page.create_page_button(
+ p_id=>wwv_flow_imp.id(11490906708379298)
+,p_button_sequence=>30
+,p_button_plug_id=>wwv_flow_imp.id(11488771203379293)
+,p_button_name=>'SAVE'
+,p_button_action=>'SUBMIT'
+,p_button_template_options=>'#DEFAULT#'
+,p_button_template_id=>4072362960822175091
+,p_button_is_hot=>'Y'
+,p_button_image_alt=>'Apply Changes'
+,p_button_position=>'NEXT'
+,p_button_alignment=>'RIGHT'
+,p_button_condition=>'P5_PAYMENT_ID'
+,p_button_condition_type=>'ITEM_IS_NOT_NULL'
+,p_database_action=>'UPDATE'
+);
+wwv_flow_imp_page.create_page_button(
+ p_id=>wwv_flow_imp.id(11491321323379298)
+,p_button_sequence=>40
+,p_button_plug_id=>wwv_flow_imp.id(11488771203379293)
+,p_button_name=>'CREATE'
+,p_button_action=>'SUBMIT'
+,p_button_template_options=>'#DEFAULT#'
+,p_button_template_id=>4072362960822175091
+,p_button_is_hot=>'Y'
+,p_button_image_alt=>'Create'
+,p_button_position=>'NEXT'
+,p_button_alignment=>'RIGHT'
+,p_button_condition=>'P5_PAYMENT_ID'
+,p_button_condition_type=>'ITEM_IS_NULL'
+,p_database_action=>'INSERT'
+);
+wwv_flow_imp_page.create_page_item(
+ p_id=>wwv_flow_imp.id(11483154635379276)
+,p_name=>'P5_PAYMENT_ID'
+,p_source_data_type=>'NUMBER'
+,p_is_primary_key=>true
+,p_is_query_only=>true
+,p_item_sequence=>10
+,p_item_plug_id=>wwv_flow_imp.id(11482809889379273)
+,p_item_source_plug_id=>wwv_flow_imp.id(11482809889379273)
+,p_use_cache_before_default=>'NO'
+,p_prompt=>'Payment Id'
+,p_source=>'PAYMENT_ID'
+,p_source_type=>'REGION_SOURCE_COLUMN'
+,p_display_as=>'NATIVE_HIDDEN'
+,p_label_alignment=>'RIGHT'
+,p_field_template=>1609121967514267634
+,p_item_template_options=>'#DEFAULT#'
+,p_is_persistent=>'N'
+,p_protection_level=>'S'
+,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
+  'value_protected', 'Y')).to_clob
+);
+wwv_flow_imp_page.create_page_item(
+ p_id=>wwv_flow_imp.id(11483592749379282)
+,p_name=>'P5_STUDENT_ID'
+,p_source_data_type=>'NUMBER'
+,p_item_sequence=>20
+,p_item_plug_id=>wwv_flow_imp.id(11482809889379273)
+,p_item_source_plug_id=>wwv_flow_imp.id(11482809889379273)
+,p_use_cache_before_default=>'NO'
+,p_prompt=>'Student Id'
+,p_source=>'STUDENT_ID'
+,p_source_type=>'REGION_SOURCE_COLUMN'
+,p_display_as=>'NATIVE_SELECT_LIST'
+,p_named_lov=>'PETER_STUDENTS.FULL_NAME'
+,p_lov_display_null=>'YES'
+,p_cSize=>32
+,p_cMaxlength=>255
+,p_cHeight=>1
+,p_label_alignment=>'RIGHT'
+,p_field_template=>1609121967514267634
+,p_item_template_options=>'#DEFAULT#'
+,p_is_persistent=>'N'
+,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
+  'execute_validations', 'Y',
+  'page_action_on_selection', 'NONE')).to_clob
+);
+wwv_flow_imp_page.create_page_item(
+ p_id=>wwv_flow_imp.id(11483904169379285)
+,p_name=>'P5_PAYMENT_TYPE'
+,p_source_data_type=>'VARCHAR2'
+,p_item_sequence=>30
+,p_item_plug_id=>wwv_flow_imp.id(11482809889379273)
+,p_item_source_plug_id=>wwv_flow_imp.id(11482809889379273)
+,p_use_cache_before_default=>'NO'
+,p_prompt=>'Payment Type'
+,p_source=>'PAYMENT_TYPE'
+,p_source_type=>'REGION_SOURCE_COLUMN'
+,p_display_as=>'NATIVE_TEXT_FIELD'
+,p_cSize=>32
+,p_cMaxlength=>50
+,p_label_alignment=>'RIGHT'
+,p_field_template=>1609121967514267634
+,p_item_template_options=>'#DEFAULT#'
+,p_is_persistent=>'N'
+,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
+  'disabled', 'N',
+  'submit_when_enter_pressed', 'N',
+  'subtype', 'TEXT',
+  'trim_spaces', 'BOTH')).to_clob
+);
+wwv_flow_imp_page.create_page_item(
+ p_id=>wwv_flow_imp.id(11484320304379287)
+,p_name=>'P5_AMOUNT_PAID'
+,p_source_data_type=>'NUMBER'
+,p_item_sequence=>40
+,p_item_plug_id=>wwv_flow_imp.id(11482809889379273)
+,p_item_source_plug_id=>wwv_flow_imp.id(11482809889379273)
+,p_use_cache_before_default=>'NO'
+,p_prompt=>'Amount Paid'
+,p_source=>'AMOUNT_PAID'
+,p_source_type=>'REGION_SOURCE_COLUMN'
+,p_display_as=>'NATIVE_NUMBER_FIELD'
+,p_cSize=>32
+,p_cMaxlength=>255
+,p_cHeight=>1
+,p_label_alignment=>'RIGHT'
+,p_field_template=>1609121967514267634
+,p_item_template_options=>'#DEFAULT#'
+,p_is_persistent=>'N'
+,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
+  'number_alignment', 'left',
+  'virtual_keyboard', 'decimal')).to_clob
+);
+wwv_flow_imp_page.create_page_item(
+ p_id=>wwv_flow_imp.id(11484786966379287)
+,p_name=>'P5_REFERENCE_NUMBER'
+,p_source_data_type=>'VARCHAR2'
+,p_item_sequence=>50
+,p_item_plug_id=>wwv_flow_imp.id(11482809889379273)
+,p_item_source_plug_id=>wwv_flow_imp.id(11482809889379273)
+,p_use_cache_before_default=>'NO'
+,p_prompt=>'Reference Number'
+,p_source=>'REFERENCE_NUMBER'
+,p_source_type=>'REGION_SOURCE_COLUMN'
+,p_display_as=>'NATIVE_TEXT_FIELD'
+,p_cSize=>32
+,p_cMaxlength=>20
+,p_label_alignment=>'RIGHT'
+,p_field_template=>1609121967514267634
+,p_item_template_options=>'#DEFAULT#'
+,p_is_persistent=>'N'
+,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
+  'disabled', 'N',
+  'submit_when_enter_pressed', 'N',
+  'subtype', 'TEXT',
+  'trim_spaces', 'BOTH')).to_clob
+);
+wwv_flow_imp_page.create_page_item(
+ p_id=>wwv_flow_imp.id(11485186106379287)
+,p_name=>'P5_SESSION'
+,p_source_data_type=>'VARCHAR2'
+,p_item_sequence=>60
+,p_item_plug_id=>wwv_flow_imp.id(11482809889379273)
+,p_item_source_plug_id=>wwv_flow_imp.id(11482809889379273)
+,p_use_cache_before_default=>'NO'
+,p_prompt=>'Session'
+,p_source=>'SESSION'
+,p_source_type=>'REGION_SOURCE_COLUMN'
+,p_display_as=>'NATIVE_TEXT_FIELD'
+,p_cSize=>32
+,p_cMaxlength=>9
+,p_label_alignment=>'RIGHT'
+,p_field_template=>1609121967514267634
+,p_item_template_options=>'#DEFAULT#'
+,p_is_persistent=>'N'
+,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
+  'disabled', 'N',
+  'submit_when_enter_pressed', 'N',
+  'subtype', 'TEXT',
+  'trim_spaces', 'BOTH')).to_clob
+);
+wwv_flow_imp_page.create_page_item(
+ p_id=>wwv_flow_imp.id(11485544368379289)
+,p_name=>'P5_SEMESTER'
+,p_source_data_type=>'VARCHAR2'
+,p_is_required=>true
+,p_item_sequence=>70
+,p_item_plug_id=>wwv_flow_imp.id(11482809889379273)
+,p_item_source_plug_id=>wwv_flow_imp.id(11482809889379273)
+,p_prompt=>'Semester'
+,p_source=>'SEMESTER'
+,p_source_type=>'REGION_SOURCE_COLUMN'
+,p_display_as=>'NATIVE_TEXT_FIELD'
+,p_cSize=>32
+,p_cMaxlength=>5
+,p_field_template=>1609121967514267634
+,p_item_template_options=>'#DEFAULT#'
+,p_is_persistent=>'N'
+,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
+  'disabled', 'N',
+  'submit_when_enter_pressed', 'N',
+  'subtype', 'TEXT',
+  'trim_spaces', 'BOTH')).to_clob
+);
+wwv_flow_imp_page.create_page_item(
+ p_id=>wwv_flow_imp.id(11485946766379290)
+,p_name=>'P5_PAYMENT_DATE'
+,p_source_data_type=>'DATE'
+,p_item_sequence=>80
+,p_item_plug_id=>wwv_flow_imp.id(11482809889379273)
+,p_item_source_plug_id=>wwv_flow_imp.id(11482809889379273)
+,p_use_cache_before_default=>'NO'
+,p_prompt=>'Payment Date'
+,p_source=>'PAYMENT_DATE'
+,p_source_type=>'REGION_SOURCE_COLUMN'
+,p_display_as=>'NATIVE_DATE_PICKER_APEX'
+,p_cSize=>32
+,p_cMaxlength=>255
+,p_cHeight=>1
+,p_label_alignment=>'RIGHT'
+,p_field_template=>1609121967514267634
+,p_item_template_options=>'#DEFAULT#'
+,p_is_persistent=>'N'
+,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
+  'appearance_and_behavior', 'MONTH-PICKER:YEAR-PICKER:TODAY-BUTTON',
+  'days_outside_month', 'VISIBLE',
+  'display_as', 'POPUP',
+  'max_date', 'NONE',
+  'min_date', 'NONE',
+  'multiple_months', 'N',
+  'show_on', 'FOCUS',
+  'show_time', 'N',
+  'use_defaults', 'Y')).to_clob
+);
+wwv_flow_imp_page.create_page_da_event(
+ p_id=>wwv_flow_imp.id(11489243849379293)
+,p_name=>'Cancel Dialog'
+,p_event_sequence=>10
+,p_triggering_element_type=>'BUTTON'
+,p_triggering_button_id=>wwv_flow_imp.id(11489150185379293)
+,p_bind_type=>'bind'
+,p_execution_type=>'IMMEDIATE'
+,p_bind_event_type=>'click'
+);
+wwv_flow_imp_page.create_page_da_action(
+ p_id=>wwv_flow_imp.id(11490077020379296)
+,p_event_id=>wwv_flow_imp.id(11489243849379293)
+,p_event_result=>'TRUE'
+,p_action_sequence=>10
+,p_execute_on_page_init=>'N'
+,p_action=>'NATIVE_DIALOG_CANCEL'
+);
+wwv_flow_imp_page.create_page_process(
+ p_id=>wwv_flow_imp.id(11492113465379300)
+,p_process_sequence=>10
+,p_process_point=>'AFTER_SUBMIT'
+,p_region_id=>wwv_flow_imp.id(11482809889379273)
+,p_process_type=>'NATIVE_FORM_DML'
+,p_process_name=>'Process form Pay'
+,p_attribute_01=>'REGION_SOURCE'
+,p_attribute_05=>'Y'
+,p_attribute_06=>'Y'
+,p_attribute_08=>'Y'
+,p_error_display_location=>'INLINE_IN_NOTIFICATION'
+,p_internal_uid=>11492113465379300
+);
+wwv_flow_imp_page.create_page_process(
+ p_id=>wwv_flow_imp.id(11492560032379300)
+,p_process_sequence=>50
+,p_process_point=>'AFTER_SUBMIT'
+,p_process_type=>'NATIVE_CLOSE_WINDOW'
+,p_process_name=>'Close Dialog'
+,p_error_display_location=>'INLINE_IN_NOTIFICATION'
+,p_process_when=>'CREATE,SAVE,DELETE'
+,p_process_when_type=>'REQUEST_IN_CONDITION'
+,p_internal_uid=>11492560032379300
+);
+wwv_flow_imp_page.create_page_process(
+ p_id=>wwv_flow_imp.id(11491765189379300)
+,p_process_sequence=>10
+,p_process_point=>'BEFORE_HEADER'
+,p_region_id=>wwv_flow_imp.id(11482809889379273)
+,p_process_type=>'NATIVE_FORM_INIT'
+,p_process_name=>'Initialize form Pay'
+,p_error_display_location=>'INLINE_IN_NOTIFICATION'
+,p_internal_uid=>11491765189379300
+);
+end;
+/
+prompt --application/pages/page_00006
+begin
+wwv_flow_imp_page.create_page(
+ p_id=>6
+,p_name=>'Registration'
+,p_alias=>'REGISTRATION1'
+,p_step_title=>'Registration'
+,p_autocomplete_on_off=>'OFF'
+,p_page_template_options=>'#DEFAULT#'
+,p_protection_level=>'C'
+,p_page_component_map=>'18'
+);
+wwv_flow_imp_page.create_page_plug(
+ p_id=>wwv_flow_imp.id(11517920633484440)
+,p_plug_name=>'Registration'
+,p_region_template_options=>'#DEFAULT#:t-IRR-region--hideHeader js-addHiddenHeadingRoleDesc'
+,p_plug_template=>2100526641005906379
+,p_plug_display_sequence=>10
+,p_query_type=>'SQL'
+,p_plug_source=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'SELECT ',
+'   R.REGISTRATION_ID,',
+'   R.STUDENT_ID,',
+'   R.COURSE_ID,',
+'   R."SESSION",',
+'   R.SEMESTER,',
+'   C.COURSE_TITLE,',
+'   S.FULL_NAME',
+'FROM PETER_REGISTRATIONS R',
+'JOIN PETER_STUDENTS S',
+'  ON R.STUDENT_ID = S.STUDENT_ID',
+'JOIN PETER_COURSES C',
+'  ON R.COURSE_ID = C.COURSE_ID;',
+''))
+,p_plug_source_type=>'NATIVE_IR'
+,p_ajax_items_to_submit=>'P6_STUDENT_ID'
+,p_prn_page_header=>'Registration'
+);
+wwv_flow_imp_page.create_worksheet(
+ p_id=>wwv_flow_imp.id(11518003210484440)
+,p_name=>'Registration'
+,p_max_row_count_message=>'The maximum row count for this report is #MAX_ROW_COUNT# rows.  Please apply a filter to reduce the number of records in your query.'
+,p_no_data_found_message=>'No data found.'
+,p_base_pk1=>'REGISTRATION_ID'
+,p_pagination_type=>'ROWS_X_TO_Y'
+,p_pagination_display_pos=>'BOTTOM_RIGHT'
+,p_report_list_mode=>'TABS'
+,p_lazy_loading=>false
+,p_show_detail_link=>'C'
+,p_show_notify=>'Y'
+,p_download_formats=>'CSV:HTML:XLSX:PDF'
+,p_enable_mail_download=>'Y'
+,p_detail_link=>'f?p=&APP_ID.:7:&APP_SESSION.::&DEBUG.:RP:P7_REGISTRATION_ID:\#REGISTRATION_ID#\'
+,p_detail_link_text=>'<span role="img" aria-label="Edit" class="fa fa-edit" title="Edit"></span>'
+,p_owner=>'ADMIN'
+,p_internal_uid=>11518003210484440
+);
+wwv_flow_imp_page.create_worksheet_column(
+ p_id=>wwv_flow_imp.id(11518797762484445)
+,p_db_column_name=>'REGISTRATION_ID'
+,p_display_order=>0
+,p_is_primary_key=>'Y'
+,p_column_identifier=>'A'
+,p_column_label=>'Registration ID'
+,p_column_type=>'NUMBER'
+,p_display_text_as=>'HIDDEN_ESCAPE_SC'
+,p_heading_alignment=>'LEFT'
+,p_tz_dependent=>'N'
+,p_use_as_row_header=>'N'
+);
+wwv_flow_imp_page.create_worksheet_column(
+ p_id=>wwv_flow_imp.id(11519980199484446)
+,p_db_column_name=>'SESSION'
+,p_display_order=>4
+,p_column_identifier=>'D'
+,p_column_label=>'Session'
+,p_column_type=>'STRING'
+,p_heading_alignment=>'LEFT'
+,p_tz_dependent=>'N'
+,p_use_as_row_header=>'N'
+);
+wwv_flow_imp_page.create_worksheet_column(
+ p_id=>wwv_flow_imp.id(11520324901484446)
+,p_db_column_name=>'SEMESTER'
+,p_display_order=>5
+,p_column_identifier=>'E'
+,p_column_label=>'Semester'
+,p_column_type=>'STRING'
+,p_heading_alignment=>'LEFT'
+,p_tz_dependent=>'N'
+,p_use_as_row_header=>'N'
+);
+wwv_flow_imp_page.create_worksheet_column(
+ p_id=>wwv_flow_imp.id(11305530855259848)
+,p_db_column_name=>'STUDENT_ID'
+,p_display_order=>15
+,p_column_identifier=>'F'
+,p_column_label=>'Student Id'
+,p_column_type=>'NUMBER'
+,p_heading_alignment=>'RIGHT'
+,p_column_alignment=>'RIGHT'
+,p_use_as_row_header=>'N'
+);
+wwv_flow_imp_page.create_worksheet_column(
+ p_id=>wwv_flow_imp.id(11305620618259849)
+,p_db_column_name=>'COURSE_ID'
+,p_display_order=>25
+,p_column_identifier=>'G'
+,p_column_label=>'Course Id'
+,p_column_type=>'NUMBER'
+,p_heading_alignment=>'RIGHT'
+,p_column_alignment=>'RIGHT'
+,p_use_as_row_header=>'N'
+);
+wwv_flow_imp_page.create_worksheet_column(
+ p_id=>wwv_flow_imp.id(11555608391903701)
+,p_db_column_name=>'FULL_NAME'
+,p_display_order=>35
+,p_column_identifier=>'H'
+,p_column_label=>'Full Name'
+,p_column_type=>'STRING'
+,p_heading_alignment=>'LEFT'
+,p_use_as_row_header=>'N'
+);
+wwv_flow_imp_page.create_worksheet_column(
+ p_id=>wwv_flow_imp.id(11559873934903743)
+,p_db_column_name=>'COURSE_TITLE'
+,p_display_order=>45
+,p_column_identifier=>'I'
+,p_column_label=>'Course Title'
+,p_column_type=>'STRING'
+,p_heading_alignment=>'LEFT'
+,p_use_as_row_header=>'N'
+);
+wwv_flow_imp_page.create_worksheet_rpt(
+ p_id=>wwv_flow_imp.id(11523035776487456)
+,p_application_user=>'APXWS_DEFAULT'
+,p_report_seq=>10
+,p_report_alias=>'115231'
+,p_status=>'PUBLIC'
+,p_is_default=>'Y'
+,p_report_columns=>'REGISTRATION_ID:SESSION:SEMESTER'
+);
+wwv_flow_imp_page.create_page_plug(
+ p_id=>wwv_flow_imp.id(11522424993484453)
+,p_plug_name=>'Breadcrumb'
+,p_region_template_options=>'#DEFAULT#:t-BreadcrumbRegion--useBreadcrumbTitle'
+,p_component_template_options=>'#DEFAULT#'
+,p_plug_template=>2531463326621247859
+,p_plug_display_sequence=>10
+,p_plug_display_point=>'REGION_POSITION_01'
+,p_menu_id=>wwv_flow_imp.id(11285179723136217)
+,p_plug_source_type=>'NATIVE_BREADCRUMB'
+,p_menu_template_id=>4072363345357175094
+);
+wwv_flow_imp_page.create_page_button(
+ p_id=>wwv_flow_imp.id(11520889420484446)
+,p_button_sequence=>10
+,p_button_plug_id=>wwv_flow_imp.id(11517920633484440)
+,p_button_name=>'CREATE'
+,p_button_action=>'REDIRECT_PAGE'
+,p_button_template_options=>'#DEFAULT#'
+,p_button_template_id=>4072362960822175091
+,p_button_is_hot=>'Y'
+,p_button_image_alt=>'Create'
+,p_button_position=>'RIGHT_OF_IR_SEARCH_BAR'
+,p_button_redirect_url=>'f?p=&APP_ID.:7:&APP_SESSION.::&DEBUG.:7::'
+);
+wwv_flow_imp_page.create_page_item(
+ p_id=>wwv_flow_imp.id(11305357975259846)
+,p_name=>'P6_STUDENT_ID'
+,p_item_sequence=>10
+,p_item_plug_id=>wwv_flow_imp.id(11517920633484440)
+,p_display_as=>'NATIVE_HIDDEN'
+,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
+  'value_protected', 'N')).to_clob
+);
+wwv_flow_imp_page.create_page_computation(
+ p_id=>wwv_flow_imp.id(11305455211259847)
+,p_computation_sequence=>10
+,p_computation_item=>'P6_STUDENT_ID'
+,p_computation_point=>'BEFORE_BOX_BODY'
+,p_computation_type=>'QUERY'
+,p_computation=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'SELECT student_id ',
+'FROM peter_students ',
+'WHERE student_id = :P6_STUDENT_ID',
+'',
+'-- select student_id from peter_students ',
+'-- where student_id = :APP_USER'))
+);
+wwv_flow_imp_page.create_page_da_event(
+ p_id=>wwv_flow_imp.id(11521146558484448)
+,p_name=>'Edit Report - Dialog Closed'
+,p_event_sequence=>10
+,p_triggering_element_type=>'REGION'
+,p_triggering_region_id=>wwv_flow_imp.id(11517920633484440)
+,p_bind_type=>'bind'
+,p_execution_type=>'IMMEDIATE'
+,p_bind_event_type=>'apexafterclosedialog'
+);
+wwv_flow_imp_page.create_page_da_action(
+ p_id=>wwv_flow_imp.id(11521671746484450)
+,p_event_id=>wwv_flow_imp.id(11521146558484448)
+,p_event_result=>'TRUE'
+,p_action_sequence=>10
+,p_execute_on_page_init=>'N'
+,p_action=>'NATIVE_REFRESH'
+,p_affected_elements_type=>'REGION'
+,p_affected_region_id=>wwv_flow_imp.id(11517920633484440)
+);
+end;
+/
+prompt --application/pages/page_00007
+begin
+wwv_flow_imp_page.create_page(
+ p_id=>7
+,p_name=>'Registration'
+,p_alias=>'REGISTRATION'
+,p_page_mode=>'MODAL'
+,p_step_title=>'Registration'
+,p_autocomplete_on_off=>'OFF'
+,p_step_template=>1661186590416509825
+,p_page_template_options=>'#DEFAULT#:js-dialog-class-t-Drawer--pullOutEnd'
+,p_dialog_chained=>'N'
+,p_dialog_resizable=>'Y'
+,p_protection_level=>'C'
+,p_page_component_map=>'16'
+);
+wwv_flow_imp_page.create_page_plug(
+ p_id=>wwv_flow_imp.id(11508914440484396)
+,p_plug_name=>'Registration'
+,p_region_template_options=>'#DEFAULT#'
+,p_plug_template=>4501440665235496320
+,p_plug_display_sequence=>10
+,p_query_type=>'TABLE'
+,p_query_table=>'PETER_REGISTRATIONS'
+,p_include_rowid_column=>false
+,p_is_editable=>true
+,p_edit_operations=>'i:u:d'
+,p_lost_update_check_type=>'VALUES'
+,p_plug_source_type=>'NATIVE_FORM'
+);
+wwv_flow_imp_page.create_page_plug(
+ p_id=>wwv_flow_imp.id(11513186043484426)
+,p_plug_name=>'Buttons'
+,p_region_template_options=>'#DEFAULT#'
+,p_plug_template=>2126429139436695430
+,p_plug_display_sequence=>20
+,p_plug_display_point=>'REGION_POSITION_03'
+,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
+  'expand_shortcuts', 'N',
+  'output_as', 'TEXT',
+  'show_line_breaks', 'Y')).to_clob
+);
+wwv_flow_imp_page.create_page_button(
+ p_id=>wwv_flow_imp.id(11513586598484428)
+,p_button_sequence=>10
+,p_button_plug_id=>wwv_flow_imp.id(11513186043484426)
+,p_button_name=>'CANCEL'
+,p_button_action=>'DEFINED_BY_DA'
+,p_button_template_options=>'#DEFAULT#'
+,p_button_template_id=>4072362960822175091
+,p_button_image_alt=>'Cancel'
+,p_button_position=>'CLOSE'
+,p_button_alignment=>'RIGHT'
+);
+wwv_flow_imp_page.create_page_button(
+ p_id=>wwv_flow_imp.id(11514996697484432)
+,p_button_sequence=>20
+,p_button_plug_id=>wwv_flow_imp.id(11513186043484426)
+,p_button_name=>'DELETE'
+,p_button_action=>'SUBMIT'
+,p_button_template_options=>'#DEFAULT#'
+,p_button_template_id=>4072362960822175091
+,p_button_image_alt=>'Delete'
+,p_button_position=>'DELETE'
+,p_button_alignment=>'RIGHT'
+,p_button_execute_validations=>'N'
+,p_confirm_message=>'&APP_TEXT$DELETE_MSG!RAW.'
+,p_confirm_style=>'danger'
+,p_button_condition=>'P7_REGISTRATION_ID'
+,p_button_condition_type=>'ITEM_IS_NOT_NULL'
+,p_database_action=>'DELETE'
+);
+wwv_flow_imp_page.create_page_button(
+ p_id=>wwv_flow_imp.id(11515379254484432)
+,p_button_sequence=>30
+,p_button_plug_id=>wwv_flow_imp.id(11513186043484426)
+,p_button_name=>'SAVE'
+,p_button_action=>'SUBMIT'
+,p_button_template_options=>'#DEFAULT#'
+,p_button_template_id=>4072362960822175091
+,p_button_is_hot=>'Y'
+,p_button_image_alt=>'Apply Changes'
+,p_button_position=>'NEXT'
+,p_button_alignment=>'RIGHT'
+,p_button_condition=>'P7_REGISTRATION_ID'
+,p_button_condition_type=>'ITEM_IS_NOT_NULL'
+,p_database_action=>'UPDATE'
+);
+wwv_flow_imp_page.create_page_button(
+ p_id=>wwv_flow_imp.id(11515710081484432)
+,p_button_sequence=>40
+,p_button_plug_id=>wwv_flow_imp.id(11513186043484426)
+,p_button_name=>'CREATE'
+,p_button_action=>'SUBMIT'
+,p_button_template_options=>'#DEFAULT#'
+,p_button_template_id=>4072362960822175091
+,p_button_is_hot=>'Y'
+,p_button_image_alt=>'Create'
+,p_button_position=>'NEXT'
+,p_button_alignment=>'RIGHT'
+,p_button_condition=>'P7_REGISTRATION_ID'
+,p_button_condition_type=>'ITEM_IS_NULL'
+,p_database_action=>'INSERT'
+);
+wwv_flow_imp_page.create_page_item(
+ p_id=>wwv_flow_imp.id(11509303080484401)
+,p_name=>'P7_REGISTRATION_ID'
+,p_source_data_type=>'NUMBER'
+,p_is_primary_key=>true
+,p_is_query_only=>true
+,p_item_sequence=>10
+,p_item_plug_id=>wwv_flow_imp.id(11508914440484396)
+,p_item_source_plug_id=>wwv_flow_imp.id(11508914440484396)
+,p_use_cache_before_default=>'NO'
+,p_prompt=>'Registration Id'
+,p_source=>'REGISTRATION_ID'
+,p_source_type=>'REGION_SOURCE_COLUMN'
+,p_display_as=>'NATIVE_HIDDEN'
+,p_label_alignment=>'RIGHT'
+,p_field_template=>1609121967514267634
+,p_item_template_options=>'#DEFAULT#'
+,p_is_persistent=>'N'
+,p_protection_level=>'S'
+,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
+  'value_protected', 'Y')).to_clob
+);
+wwv_flow_imp_page.create_page_item(
+ p_id=>wwv_flow_imp.id(11509712654484407)
+,p_name=>'P7_STUDENT_ID'
+,p_source_data_type=>'NUMBER'
+,p_is_required=>true
+,p_item_sequence=>20
+,p_item_plug_id=>wwv_flow_imp.id(11508914440484396)
+,p_item_source_plug_id=>wwv_flow_imp.id(11508914440484396)
+,p_prompt=>'Student Id'
+,p_source=>'STUDENT_ID'
+,p_source_type=>'REGION_SOURCE_COLUMN'
+,p_display_as=>'NATIVE_SELECT_LIST'
+,p_lov=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'select full_name d,',
+'student_id r from ',
+'peter_students',
+'where upper(username) = upper(:App_user)'))
+,p_lov_display_null=>'YES'
+,p_cHeight=>1
+,p_field_template=>1609121967514267634
+,p_item_template_options=>'#DEFAULT#'
+,p_is_persistent=>'N'
+,p_lov_display_extra=>'YES'
+,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
+  'page_action_on_selection', 'NONE')).to_clob
+);
+wwv_flow_imp_page.create_page_item(
+ p_id=>wwv_flow_imp.id(11510125032484410)
+,p_name=>'P7_COURSE_ID'
+,p_source_data_type=>'NUMBER'
+,p_is_required=>true
+,p_item_sequence=>30
+,p_item_plug_id=>wwv_flow_imp.id(11508914440484396)
+,p_item_source_plug_id=>wwv_flow_imp.id(11508914440484396)
+,p_prompt=>'Course Id'
+,p_source=>'COURSE_ID'
+,p_source_type=>'REGION_SOURCE_COLUMN'
+,p_display_as=>'NATIVE_SELECT_LIST'
+,p_lov=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'select course_title,',
+'course_id',
+'from peter_courses'))
+,p_lov_display_null=>'YES'
+,p_cHeight=>1
+,p_field_template=>1609121967514267634
+,p_item_template_options=>'#DEFAULT#'
+,p_is_persistent=>'N'
+,p_lov_display_extra=>'YES'
+,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
+  'page_action_on_selection', 'NONE')).to_clob
+);
+wwv_flow_imp_page.create_page_item(
+ p_id=>wwv_flow_imp.id(11510888139484423)
+,p_name=>'P7_SESSION'
+,p_source_data_type=>'VARCHAR2'
+,p_is_required=>true
+,p_item_sequence=>40
+,p_item_plug_id=>wwv_flow_imp.id(11508914440484396)
+,p_item_source_plug_id=>wwv_flow_imp.id(11508914440484396)
+,p_prompt=>'Session'
+,p_source=>'SESSION'
+,p_source_type=>'REGION_SOURCE_COLUMN'
+,p_display_as=>'NATIVE_TEXT_FIELD'
+,p_cSize=>32
+,p_cMaxlength=>9
+,p_field_template=>1609121967514267634
+,p_item_template_options=>'#DEFAULT#'
+,p_is_persistent=>'N'
+,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
+  'disabled', 'N',
+  'submit_when_enter_pressed', 'N',
+  'subtype', 'TEXT',
+  'trim_spaces', 'BOTH')).to_clob
+);
+wwv_flow_imp_page.create_page_item(
+ p_id=>wwv_flow_imp.id(11511240972484423)
+,p_name=>'P7_SEMESTER'
+,p_source_data_type=>'VARCHAR2'
+,p_is_required=>true
+,p_item_sequence=>50
+,p_item_plug_id=>wwv_flow_imp.id(11508914440484396)
+,p_item_source_plug_id=>wwv_flow_imp.id(11508914440484396)
+,p_prompt=>'Semester'
+,p_source=>'SEMESTER'
+,p_source_type=>'REGION_SOURCE_COLUMN'
+,p_display_as=>'NATIVE_TEXT_FIELD'
+,p_cSize=>32
+,p_cMaxlength=>5
+,p_field_template=>1609121967514267634
+,p_item_template_options=>'#DEFAULT#'
+,p_is_persistent=>'N'
+,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
+  'disabled', 'N',
+  'submit_when_enter_pressed', 'N',
+  'subtype', 'TEXT',
+  'trim_spaces', 'BOTH')).to_clob
+);
+wwv_flow_imp_page.create_page_da_event(
+ p_id=>wwv_flow_imp.id(11513687664484428)
+,p_name=>'Cancel Dialog'
+,p_event_sequence=>10
+,p_triggering_element_type=>'BUTTON'
+,p_triggering_button_id=>wwv_flow_imp.id(11513586598484428)
+,p_bind_type=>'bind'
+,p_execution_type=>'IMMEDIATE'
+,p_bind_event_type=>'click'
+);
+wwv_flow_imp_page.create_page_da_action(
+ p_id=>wwv_flow_imp.id(11514421970484431)
+,p_event_id=>wwv_flow_imp.id(11513687664484428)
+,p_event_result=>'TRUE'
+,p_action_sequence=>10
+,p_execute_on_page_init=>'N'
+,p_action=>'NATIVE_DIALOG_CANCEL'
+);
+wwv_flow_imp_page.create_page_da_event(
+ p_id=>wwv_flow_imp.id(11304799052259840)
+,p_name=>'New'
+,p_event_sequence=>20
+,p_triggering_element_type=>'ITEM'
+,p_triggering_element=>'P7_COURSE_ID'
+,p_bind_type=>'bind'
+,p_execution_type=>'IMMEDIATE'
+,p_bind_event_type=>'change'
+);
+wwv_flow_imp_page.create_page_da_action(
+ p_id=>wwv_flow_imp.id(11304808008259841)
+,p_event_id=>wwv_flow_imp.id(11304799052259840)
+,p_event_result=>'TRUE'
+,p_action_sequence=>10
+,p_execute_on_page_init=>'Y'
+,p_action=>'NATIVE_SET_VALUE'
+,p_affected_elements_type=>'ITEM'
+,p_affected_elements=>'P7_SEMESTER'
+,p_attribute_01=>'SQL_STATEMENT'
+,p_attribute_03=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'',
+'SELECT SEMESTER',
+'FROM PETER_COURSES ',
+'WHERE COURSE_ID = :P7_COURSE_ID;',
+'',
+''))
+,p_attribute_07=>'P7_COURSE_ID'
+,p_attribute_08=>'Y'
+,p_attribute_09=>'N'
+,p_wait_for_result=>'Y'
+);
+wwv_flow_imp_page.create_page_da_event(
+ p_id=>wwv_flow_imp.id(11555732093903702)
+,p_name=>'New_1'
+,p_event_sequence=>30
+,p_triggering_element_type=>'ITEM'
+,p_triggering_element=>'P7_STUDENT_ID'
+,p_bind_type=>'bind'
+,p_execution_type=>'IMMEDIATE'
+,p_bind_event_type=>'change'
+);
+wwv_flow_imp_page.create_page_da_action(
+ p_id=>wwv_flow_imp.id(11555897511903703)
+,p_event_id=>wwv_flow_imp.id(11555732093903702)
+,p_event_result=>'TRUE'
+,p_action_sequence=>10
+,p_execute_on_page_init=>'Y'
+,p_action=>'NATIVE_SET_VALUE'
+,p_affected_elements_type=>'ITEM'
+,p_affected_elements=>'P7_SESSION'
+,p_attribute_01=>'SQL_STATEMENT'
+,p_attribute_03=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'SELECT "SESSION"',
+'FROM PETER_STUDENTS',
+'WHERE STUDENT_ID = :P7_STUDENT_ID;',
+''))
+,p_attribute_07=>'P7_STUDENT_ID'
+,p_attribute_08=>'N'
+,p_attribute_09=>'N'
+,p_wait_for_result=>'Y'
+);
+wwv_flow_imp_page.create_page_process(
+ p_id=>wwv_flow_imp.id(11516941265484435)
+,p_process_sequence=>50
+,p_process_point=>'AFTER_SUBMIT'
+,p_process_type=>'NATIVE_CLOSE_WINDOW'
+,p_process_name=>'Close Dialog'
+,p_error_display_location=>'INLINE_IN_NOTIFICATION'
+,p_process_when=>'CREATE,SAVE,DELETE'
+,p_process_when_type=>'REQUEST_IN_CONDITION'
+,p_internal_uid=>11516941265484435
+);
+wwv_flow_imp_page.create_page_process(
+ p_id=>wwv_flow_imp.id(11516142636484434)
+,p_process_sequence=>10
+,p_process_point=>'BEFORE_HEADER'
+,p_region_id=>wwv_flow_imp.id(11508914440484396)
+,p_process_type=>'NATIVE_FORM_INIT'
+,p_process_name=>'Initialize form Registration'
+,p_error_display_location=>'INLINE_IN_NOTIFICATION'
+,p_internal_uid=>11516142636484434
+);
+wwv_flow_imp_page.create_page_process(
+ p_id=>wwv_flow_imp.id(11557081715903715)
+,p_process_sequence=>60
+,p_process_point=>'ON_SUBMIT_BEFORE_COMPUTATION'
+,p_process_type=>'NATIVE_PLSQL'
+,p_process_name=>'get_course'
+,p_process_sql_clob=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'BEGIN',
+'REGISTRATION.INS_PETER_REGISTRATIONS (',
+'      "P_REGISTRATION_ID"  => :P7_REGISTRATION_ID,',
+'      "P_STUDENT_ID"       => :P7_STUDENT_ID,',
+'      "P_COURSE_ID"        => :P7_COURSE_ID,',
+'      "P_SESSION"          => :P7_SESSION,',
+'      "P_SEMESTER"         => :P7_SEMESTER',
+');',
+'END;'))
+,p_process_clob_language=>'PLSQL'
+,p_error_display_location=>'INLINE_IN_NOTIFICATION'
+,p_process_when_button_id=>wwv_flow_imp.id(11515710081484432)
+,p_process_success_message=>'Course Successfully Registered!'
+,p_internal_uid=>11557081715903715
+);
+wwv_flow_imp_page.create_page_process(
+ p_id=>wwv_flow_imp.id(11557292861903717)
+,p_process_sequence=>80
+,p_process_point=>'ON_SUBMIT_BEFORE_COMPUTATION'
+,p_process_type=>'NATIVE_PLSQL'
+,p_process_name=>'Delete'
+,p_process_sql_clob=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'BEGIN',
+'REGISTRATION."DEL_PETER_REGISTRATIONS" (',
+'      "P_REGISTRATION_ID"  => :P7_REGISTRATION_ID',
+');',
+'END;'))
+,p_process_clob_language=>'PLSQL'
+,p_error_display_location=>'INLINE_IN_NOTIFICATION'
+,p_process_when_button_id=>wwv_flow_imp.id(11514996697484432)
+,p_internal_uid=>11557292861903717
+);
+end;
+/
+prompt --application/pages/page_00008
+begin
+wwv_flow_imp_page.create_page(
+ p_id=>8
+,p_name=>'CGPA Summary'
+,p_alias=>'CGPA-SUMMARY1'
+,p_step_title=>'CGPA Summary'
+,p_autocomplete_on_off=>'OFF'
+,p_page_template_options=>'#DEFAULT#'
+,p_protection_level=>'C'
+,p_page_component_map=>'18'
+);
+wwv_flow_imp_page.create_page_plug(
+ p_id=>wwv_flow_imp.id(11640990510295907)
+,p_plug_name=>'CGPA Summary'
+,p_region_template_options=>'#DEFAULT#:t-IRR-region--hideHeader js-addHiddenHeadingRoleDesc'
+,p_plug_template=>2100526641005906379
+,p_plug_display_sequence=>10
+,p_query_type=>'TABLE'
+,p_query_table=>'PETER_CGPA_SUMMARY'
+,p_include_rowid_column=>false
+,p_plug_source_type=>'NATIVE_IR'
+,p_prn_page_header=>'CGPA Summary'
+);
+wwv_flow_imp_page.create_worksheet(
+ p_id=>wwv_flow_imp.id(11641080995295907)
+,p_name=>'CGPA Summary'
+,p_max_row_count_message=>'The maximum row count for this report is #MAX_ROW_COUNT# rows.  Please apply a filter to reduce the number of records in your query.'
+,p_no_data_found_message=>'No data found.'
+,p_base_pk1=>'CGPA_SUMMARY_ID'
+,p_pagination_type=>'ROWS_X_TO_Y'
+,p_pagination_display_pos=>'BOTTOM_RIGHT'
+,p_report_list_mode=>'TABS'
+,p_lazy_loading=>false
+,p_show_detail_link=>'C'
+,p_show_notify=>'Y'
+,p_download_formats=>'CSV:HTML:XLSX:PDF'
+,p_enable_mail_download=>'Y'
+,p_detail_link=>'f?p=&APP_ID.:9:&APP_SESSION.::&DEBUG.:RP:P9_CGPA_SUMMARY_ID:\#CGPA_SUMMARY_ID#\'
+,p_detail_link_text=>'<span role="img" aria-label="Edit" class="fa fa-edit" title="Edit"></span>'
+,p_owner=>'ADMIN'
+,p_internal_uid=>11641080995295907
+);
+wwv_flow_imp_page.create_worksheet_column(
+ p_id=>wwv_flow_imp.id(11641730078295915)
+,p_db_column_name=>'CGPA_SUMMARY_ID'
+,p_display_order=>0
+,p_is_primary_key=>'Y'
+,p_column_identifier=>'A'
+,p_column_label=>'Cgpa Summary ID'
+,p_column_type=>'NUMBER'
+,p_display_text_as=>'HIDDEN_ESCAPE_SC'
+,p_heading_alignment=>'LEFT'
+,p_tz_dependent=>'N'
+,p_use_as_row_header=>'N'
+);
+wwv_flow_imp_page.create_worksheet_column(
+ p_id=>wwv_flow_imp.id(11642051806295917)
+,p_db_column_name=>'STUDENT_ID'
+,p_display_order=>2
+,p_column_identifier=>'B'
+,p_column_label=>'Student'
+,p_column_type=>'STRING'
+,p_display_text_as=>'LOV_ESCAPE_SC'
+,p_heading_alignment=>'LEFT'
+,p_tz_dependent=>'N'
+,p_rpt_named_lov=>wwv_flow_imp.id(11580797502374867)
+,p_use_as_row_header=>'N'
+);
+wwv_flow_imp_page.create_worksheet_column(
+ p_id=>wwv_flow_imp.id(11642429204295917)
+,p_db_column_name=>'SESSION'
+,p_display_order=>3
+,p_column_identifier=>'C'
+,p_column_label=>'Session'
+,p_column_type=>'STRING'
+,p_heading_alignment=>'LEFT'
+,p_tz_dependent=>'N'
+,p_use_as_row_header=>'N'
+);
+wwv_flow_imp_page.create_worksheet_column(
+ p_id=>wwv_flow_imp.id(11642819472295917)
+,p_db_column_name=>'SEMESTER'
+,p_display_order=>4
+,p_column_identifier=>'D'
+,p_column_label=>'Semester'
+,p_column_type=>'STRING'
+,p_heading_alignment=>'LEFT'
+,p_tz_dependent=>'N'
+,p_use_as_row_header=>'N'
+);
+wwv_flow_imp_page.create_worksheet_column(
+ p_id=>wwv_flow_imp.id(11643255943295918)
+,p_db_column_name=>'GPA'
+,p_display_order=>5
+,p_column_identifier=>'E'
+,p_column_label=>'Gpa'
+,p_column_type=>'NUMBER'
+,p_heading_alignment=>'RIGHT'
+,p_column_alignment=>'RIGHT'
+,p_tz_dependent=>'N'
+,p_use_as_row_header=>'N'
+);
+wwv_flow_imp_page.create_worksheet_column(
+ p_id=>wwv_flow_imp.id(11643645287295918)
+,p_db_column_name=>'CGPA'
+,p_display_order=>6
+,p_column_identifier=>'F'
+,p_column_label=>'Cgpa'
+,p_column_type=>'NUMBER'
+,p_heading_alignment=>'RIGHT'
+,p_column_alignment=>'RIGHT'
+,p_tz_dependent=>'N'
+,p_use_as_row_header=>'N'
+);
+wwv_flow_imp_page.create_worksheet_rpt(
+ p_id=>wwv_flow_imp.id(11646326197577950)
+,p_application_user=>'APXWS_DEFAULT'
+,p_report_seq=>10
+,p_report_alias=>'116464'
+,p_status=>'PUBLIC'
+,p_is_default=>'Y'
+,p_report_columns=>'CGPA_SUMMARY_ID:STUDENT_ID:SESSION:SEMESTER:GPA:CGPA'
+);
+wwv_flow_imp_page.create_page_plug(
+ p_id=>wwv_flow_imp.id(11645788246295923)
+,p_plug_name=>'Breadcrumb'
+,p_region_template_options=>'#DEFAULT#:t-BreadcrumbRegion--useBreadcrumbTitle'
+,p_component_template_options=>'#DEFAULT#'
+,p_plug_template=>2531463326621247859
+,p_plug_display_sequence=>10
+,p_plug_display_point=>'REGION_POSITION_01'
+,p_menu_id=>wwv_flow_imp.id(11285179723136217)
+,p_plug_source_type=>'NATIVE_BREADCRUMB'
+,p_menu_template_id=>4072363345357175094
+);
+wwv_flow_imp_page.create_page_button(
+ p_id=>wwv_flow_imp.id(11644163694295918)
+,p_button_sequence=>10
+,p_button_plug_id=>wwv_flow_imp.id(11640990510295907)
+,p_button_name=>'CREATE'
+,p_button_action=>'REDIRECT_PAGE'
+,p_button_template_options=>'#DEFAULT#'
+,p_button_template_id=>4072362960822175091
+,p_button_is_hot=>'Y'
+,p_button_image_alt=>'Create'
+,p_button_position=>'RIGHT_OF_IR_SEARCH_BAR'
+,p_button_redirect_url=>'f?p=&APP_ID.:9:&APP_SESSION.::&DEBUG.:9::'
+);
+wwv_flow_imp_page.create_page_da_event(
+ p_id=>wwv_flow_imp.id(11644425904295918)
+,p_name=>'Edit Report - Dialog Closed'
+,p_event_sequence=>10
+,p_triggering_element_type=>'REGION'
+,p_triggering_region_id=>wwv_flow_imp.id(11640990510295907)
+,p_bind_type=>'bind'
+,p_execution_type=>'IMMEDIATE'
+,p_bind_event_type=>'apexafterclosedialog'
+);
+wwv_flow_imp_page.create_page_da_action(
+ p_id=>wwv_flow_imp.id(11644920982295920)
+,p_event_id=>wwv_flow_imp.id(11644425904295918)
+,p_event_result=>'TRUE'
+,p_action_sequence=>10
+,p_execute_on_page_init=>'N'
+,p_action=>'NATIVE_REFRESH'
+,p_affected_elements_type=>'REGION'
+,p_affected_region_id=>wwv_flow_imp.id(11640990510295907)
+);
+end;
+/
+prompt --application/pages/page_00009
+begin
+wwv_flow_imp_page.create_page(
+ p_id=>9
+,p_name=>'CGPA Summary'
+,p_alias=>'CGPA-SUMMARY'
+,p_page_mode=>'MODAL'
+,p_step_title=>'CGPA Summary'
+,p_autocomplete_on_off=>'OFF'
+,p_step_template=>1661186590416509825
+,p_page_template_options=>'#DEFAULT#:js-dialog-class-t-Drawer--pullOutEnd'
+,p_dialog_chained=>'N'
+,p_dialog_resizable=>'Y'
+,p_protection_level=>'C'
+,p_page_component_map=>'02'
+);
+wwv_flow_imp_page.create_page_plug(
+ p_id=>wwv_flow_imp.id(11631574613295868)
+,p_plug_name=>'CGPA Summary'
+,p_region_template_options=>'#DEFAULT#'
+,p_plug_template=>4501440665235496320
+,p_plug_display_sequence=>10
+,p_query_type=>'TABLE'
+,p_query_table=>'PETER_CGPA_SUMMARY'
+,p_include_rowid_column=>false
+,p_is_editable=>true
+,p_edit_operations=>'i:u:d'
+,p_lost_update_check_type=>'VALUES'
+,p_plug_source_type=>'NATIVE_FORM'
+);
+wwv_flow_imp_page.create_page_plug(
+ p_id=>wwv_flow_imp.id(11636145906295887)
+,p_plug_name=>'Buttons'
+,p_region_template_options=>'#DEFAULT#'
+,p_plug_template=>2126429139436695430
+,p_plug_display_sequence=>20
+,p_plug_display_point=>'REGION_POSITION_03'
+,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
+  'expand_shortcuts', 'N',
+  'output_as', 'TEXT',
+  'show_line_breaks', 'Y')).to_clob
+);
+wwv_flow_imp_page.create_page_button(
+ p_id=>wwv_flow_imp.id(11636550279295887)
+,p_button_sequence=>10
+,p_button_plug_id=>wwv_flow_imp.id(11636145906295887)
+,p_button_name=>'CANCEL'
+,p_button_action=>'DEFINED_BY_DA'
+,p_button_template_options=>'#DEFAULT#'
+,p_button_template_id=>4072362960822175091
+,p_button_image_alt=>'Cancel'
+,p_button_position=>'CLOSE'
+,p_button_alignment=>'RIGHT'
+);
+wwv_flow_imp_page.create_page_button(
+ p_id=>wwv_flow_imp.id(11637940367295892)
+,p_button_sequence=>20
+,p_button_plug_id=>wwv_flow_imp.id(11636145906295887)
+,p_button_name=>'DELETE'
+,p_button_action=>'SUBMIT'
+,p_button_template_options=>'#DEFAULT#'
+,p_button_template_id=>4072362960822175091
+,p_button_image_alt=>'Delete'
+,p_button_position=>'DELETE'
+,p_button_alignment=>'RIGHT'
+,p_button_execute_validations=>'N'
+,p_confirm_message=>'&APP_TEXT$DELETE_MSG!RAW.'
+,p_confirm_style=>'danger'
+,p_button_condition=>'P9_CGPA_SUMMARY_ID'
+,p_button_condition_type=>'ITEM_IS_NOT_NULL'
+,p_database_action=>'DELETE'
+);
+wwv_flow_imp_page.create_page_button(
+ p_id=>wwv_flow_imp.id(11638308577295893)
+,p_button_sequence=>30
+,p_button_plug_id=>wwv_flow_imp.id(11636145906295887)
+,p_button_name=>'SAVE'
+,p_button_action=>'SUBMIT'
+,p_button_template_options=>'#DEFAULT#'
+,p_button_template_id=>4072362960822175091
+,p_button_is_hot=>'Y'
+,p_button_image_alt=>'Apply Changes'
+,p_button_position=>'NEXT'
+,p_button_alignment=>'RIGHT'
+,p_button_condition=>'P9_CGPA_SUMMARY_ID'
+,p_button_condition_type=>'ITEM_IS_NOT_NULL'
+,p_database_action=>'UPDATE'
+);
+wwv_flow_imp_page.create_page_button(
+ p_id=>wwv_flow_imp.id(11638737687295893)
+,p_button_sequence=>40
+,p_button_plug_id=>wwv_flow_imp.id(11636145906295887)
+,p_button_name=>'CREATE'
+,p_button_action=>'SUBMIT'
+,p_button_template_options=>'#DEFAULT#'
+,p_button_template_id=>4072362960822175091
+,p_button_is_hot=>'Y'
+,p_button_image_alt=>'Create'
+,p_button_position=>'NEXT'
+,p_button_alignment=>'RIGHT'
+,p_button_condition=>'P9_CGPA_SUMMARY_ID'
+,p_button_condition_type=>'ITEM_IS_NULL'
+,p_database_action=>'INSERT'
+);
+wwv_flow_imp_page.create_page_item(
+ p_id=>wwv_flow_imp.id(11631944628295871)
+,p_name=>'P9_CGPA_SUMMARY_ID'
+,p_source_data_type=>'NUMBER'
+,p_is_primary_key=>true
+,p_is_query_only=>true
+,p_item_sequence=>10
+,p_item_plug_id=>wwv_flow_imp.id(11631574613295868)
+,p_item_source_plug_id=>wwv_flow_imp.id(11631574613295868)
+,p_use_cache_before_default=>'NO'
+,p_prompt=>'Cgpa Summary Id'
+,p_source=>'CGPA_SUMMARY_ID'
+,p_source_type=>'REGION_SOURCE_COLUMN'
+,p_display_as=>'NATIVE_HIDDEN'
+,p_label_alignment=>'RIGHT'
+,p_field_template=>1609121967514267634
+,p_item_template_options=>'#DEFAULT#'
+,p_is_persistent=>'N'
+,p_protection_level=>'S'
+,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
+  'value_protected', 'Y')).to_clob
+);
+wwv_flow_imp_page.create_page_item(
+ p_id=>wwv_flow_imp.id(11632324395295878)
+,p_name=>'P9_STUDENT_ID'
+,p_source_data_type=>'NUMBER'
+,p_item_sequence=>20
+,p_item_plug_id=>wwv_flow_imp.id(11631574613295868)
+,p_item_source_plug_id=>wwv_flow_imp.id(11631574613295868)
+,p_use_cache_before_default=>'NO'
+,p_prompt=>'Student Id'
+,p_source=>'STUDENT_ID'
+,p_source_type=>'REGION_SOURCE_COLUMN'
+,p_display_as=>'NATIVE_SELECT_LIST'
+,p_named_lov=>'STUDENT_NAME'
+,p_lov_display_null=>'YES'
+,p_cSize=>32
+,p_cMaxlength=>255
+,p_cHeight=>1
+,p_label_alignment=>'RIGHT'
+,p_field_template=>1609121967514267634
+,p_item_template_options=>'#DEFAULT#'
+,p_is_persistent=>'N'
+,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
+  'execute_validations', 'Y',
+  'page_action_on_selection', 'NONE')).to_clob
+);
+wwv_flow_imp_page.create_page_item(
+ p_id=>wwv_flow_imp.id(11632746429295882)
+,p_name=>'P9_SESSION'
+,p_source_data_type=>'VARCHAR2'
+,p_item_sequence=>30
+,p_item_plug_id=>wwv_flow_imp.id(11631574613295868)
+,p_item_source_plug_id=>wwv_flow_imp.id(11631574613295868)
+,p_use_cache_before_default=>'NO'
+,p_prompt=>'Session'
+,p_source=>'SESSION'
+,p_source_type=>'REGION_SOURCE_COLUMN'
+,p_display_as=>'NATIVE_TEXT_FIELD'
+,p_cSize=>32
+,p_cMaxlength=>9
+,p_label_alignment=>'RIGHT'
+,p_field_template=>1609121967514267634
+,p_item_template_options=>'#DEFAULT#'
+,p_is_persistent=>'N'
+,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
+  'disabled', 'N',
+  'submit_when_enter_pressed', 'N',
+  'subtype', 'TEXT',
+  'trim_spaces', 'BOTH')).to_clob
+);
+wwv_flow_imp_page.create_page_item(
+ p_id=>wwv_flow_imp.id(11633191456295882)
+,p_name=>'P9_SEMESTER'
+,p_source_data_type=>'VARCHAR2'
+,p_item_sequence=>40
+,p_item_plug_id=>wwv_flow_imp.id(11631574613295868)
+,p_item_source_plug_id=>wwv_flow_imp.id(11631574613295868)
+,p_use_cache_before_default=>'NO'
+,p_prompt=>'Semester'
+,p_source=>'SEMESTER'
+,p_source_type=>'REGION_SOURCE_COLUMN'
+,p_display_as=>'NATIVE_TEXT_FIELD'
+,p_cSize=>32
+,p_cMaxlength=>5
+,p_label_alignment=>'RIGHT'
+,p_field_template=>1609121967514267634
+,p_item_template_options=>'#DEFAULT#'
+,p_is_persistent=>'N'
+,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
+  'disabled', 'N',
+  'submit_when_enter_pressed', 'N',
+  'subtype', 'TEXT',
+  'trim_spaces', 'BOTH')).to_clob
+);
+wwv_flow_imp_page.create_page_item(
+ p_id=>wwv_flow_imp.id(11633543836295884)
+,p_name=>'P9_GPA'
+,p_source_data_type=>'NUMBER'
+,p_item_sequence=>50
+,p_item_plug_id=>wwv_flow_imp.id(11631574613295868)
+,p_item_source_plug_id=>wwv_flow_imp.id(11631574613295868)
+,p_use_cache_before_default=>'NO'
+,p_prompt=>'Gpa'
+,p_source=>'GPA'
+,p_source_type=>'REGION_SOURCE_COLUMN'
+,p_display_as=>'NATIVE_NUMBER_FIELD'
+,p_cSize=>32
+,p_cMaxlength=>255
+,p_cHeight=>1
+,p_label_alignment=>'RIGHT'
+,p_field_template=>1609121967514267634
+,p_item_template_options=>'#DEFAULT#'
+,p_is_persistent=>'N'
+,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
+  'number_alignment', 'left',
+  'virtual_keyboard', 'decimal')).to_clob
+);
+wwv_flow_imp_page.create_page_item(
+ p_id=>wwv_flow_imp.id(11633905156295884)
+,p_name=>'P9_CGPA'
+,p_source_data_type=>'NUMBER'
+,p_item_sequence=>60
+,p_item_plug_id=>wwv_flow_imp.id(11631574613295868)
+,p_item_source_plug_id=>wwv_flow_imp.id(11631574613295868)
+,p_use_cache_before_default=>'NO'
+,p_prompt=>'Cgpa'
+,p_source=>'CGPA'
+,p_source_type=>'REGION_SOURCE_COLUMN'
+,p_display_as=>'NATIVE_NUMBER_FIELD'
+,p_cSize=>32
+,p_cMaxlength=>255
+,p_cHeight=>1
+,p_label_alignment=>'RIGHT'
+,p_field_template=>1609121967514267634
+,p_item_template_options=>'#DEFAULT#'
+,p_is_persistent=>'N'
+,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
+  'number_alignment', 'left',
+  'virtual_keyboard', 'decimal')).to_clob
+);
+wwv_flow_imp_page.create_page_da_event(
+ p_id=>wwv_flow_imp.id(11636654208295887)
+,p_name=>'Cancel Dialog'
+,p_event_sequence=>10
+,p_triggering_element_type=>'BUTTON'
+,p_triggering_button_id=>wwv_flow_imp.id(11636550279295887)
+,p_bind_type=>'bind'
+,p_execution_type=>'IMMEDIATE'
+,p_bind_event_type=>'click'
+);
+wwv_flow_imp_page.create_page_da_action(
+ p_id=>wwv_flow_imp.id(11637450209295892)
+,p_event_id=>wwv_flow_imp.id(11636654208295887)
+,p_event_result=>'TRUE'
+,p_action_sequence=>10
+,p_execute_on_page_init=>'N'
+,p_action=>'NATIVE_DIALOG_CANCEL'
+);
+wwv_flow_imp_page.create_page_process(
+ p_id=>wwv_flow_imp.id(11639568597295895)
+,p_process_sequence=>10
+,p_process_point=>'AFTER_SUBMIT'
+,p_region_id=>wwv_flow_imp.id(11631574613295868)
+,p_process_type=>'NATIVE_FORM_DML'
+,p_process_name=>'Process form CGPA Summary'
+,p_attribute_01=>'REGION_SOURCE'
+,p_attribute_05=>'Y'
+,p_attribute_06=>'Y'
+,p_attribute_08=>'Y'
+,p_error_display_location=>'INLINE_IN_NOTIFICATION'
+,p_internal_uid=>11639568597295895
+);
+wwv_flow_imp_page.create_page_process(
+ p_id=>wwv_flow_imp.id(11639987027295895)
+,p_process_sequence=>50
+,p_process_point=>'AFTER_SUBMIT'
+,p_process_type=>'NATIVE_CLOSE_WINDOW'
+,p_process_name=>'Close Dialog'
+,p_error_display_location=>'INLINE_IN_NOTIFICATION'
+,p_process_when=>'CREATE,SAVE,DELETE'
+,p_process_when_type=>'REQUEST_IN_CONDITION'
+,p_internal_uid=>11639987027295895
+);
+wwv_flow_imp_page.create_page_process(
+ p_id=>wwv_flow_imp.id(11639184727295895)
+,p_process_sequence=>10
+,p_process_point=>'BEFORE_HEADER'
+,p_region_id=>wwv_flow_imp.id(11631574613295868)
+,p_process_type=>'NATIVE_FORM_INIT'
+,p_process_name=>'Initialize form CGPA Summary'
+,p_error_display_location=>'INLINE_IN_NOTIFICATION'
+,p_internal_uid=>11639184727295895
+);
+end;
+/
+prompt --application/pages/page_00010
+begin
+wwv_flow_imp_page.create_page(
+ p_id=>10
+,p_name=>'Exam Score'
+,p_alias=>'EXAM-SCORE'
+,p_step_title=>'Exam Score'
+,p_autocomplete_on_off=>'OFF'
+,p_page_template_options=>'#DEFAULT#'
+,p_protection_level=>'C'
+,p_page_component_map=>'18'
+);
+wwv_flow_imp_page.create_page_plug(
+ p_id=>wwv_flow_imp.id(11660811099036473)
+,p_plug_name=>'Breadcrumb'
+,p_region_template_options=>'#DEFAULT#:t-BreadcrumbRegion--useBreadcrumbTitle'
+,p_component_template_options=>'#DEFAULT#'
+,p_plug_template=>2531463326621247859
+,p_plug_display_sequence=>10
+,p_plug_display_point=>'REGION_POSITION_01'
+,p_menu_id=>wwv_flow_imp.id(11285179723136217)
+,p_plug_source_type=>'NATIVE_BREADCRUMB'
+,p_menu_template_id=>4072363345357175094
+);
+wwv_flow_imp_page.create_page_plug(
+ p_id=>wwv_flow_imp.id(11661589928036478)
+,p_plug_name=>'Exam Score'
+,p_region_template_options=>'#DEFAULT#:t-IRR-region--hideHeader js-addHiddenHeadingRoleDesc'
+,p_plug_template=>2100526641005906379
+,p_plug_display_sequence=>10
+,p_query_type=>'TABLE'
+,p_query_table=>'PETER_EXAM_SCORES'
+,p_include_rowid_column=>false
+,p_plug_source_type=>'NATIVE_IR'
+,p_prn_page_header=>'Exam Score'
+);
+wwv_flow_imp_page.create_worksheet(
+ p_id=>wwv_flow_imp.id(11661666935036478)
+,p_name=>'Exam Score'
+,p_max_row_count_message=>'The maximum row count for this report is #MAX_ROW_COUNT# rows.  Please apply a filter to reduce the number of records in your query.'
+,p_no_data_found_message=>'No data found.'
+,p_pagination_type=>'ROWS_X_TO_Y'
+,p_pagination_display_pos=>'BOTTOM_RIGHT'
+,p_report_list_mode=>'TABS'
+,p_lazy_loading=>false
+,p_show_detail_link=>'N'
+,p_show_notify=>'Y'
+,p_download_formats=>'CSV:HTML:XLSX:PDF'
+,p_enable_mail_download=>'Y'
+,p_owner=>'ADMIN'
+,p_internal_uid=>11661666935036478
+);
+wwv_flow_imp_page.create_worksheet_column(
+ p_id=>wwv_flow_imp.id(11662677162036500)
+,p_db_column_name=>'SCORE_ID'
+,p_display_order=>0
+,p_is_primary_key=>'Y'
+,p_column_identifier=>'A'
+,p_column_label=>'Score ID'
+,p_column_type=>'NUMBER'
+,p_display_text_as=>'HIDDEN_ESCAPE_SC'
+,p_heading_alignment=>'LEFT'
+,p_tz_dependent=>'N'
+,p_use_as_row_header=>'N'
+);
+wwv_flow_imp_page.create_worksheet_column(
+ p_id=>wwv_flow_imp.id(11663429019036501)
+,p_db_column_name=>'MIDTERM_SCORE'
+,p_display_order=>3
+,p_column_identifier=>'C'
+,p_column_label=>'Midterm Score'
+,p_column_type=>'NUMBER'
+,p_heading_alignment=>'RIGHT'
+,p_column_alignment=>'RIGHT'
+,p_tz_dependent=>'N'
+,p_use_as_row_header=>'N'
+);
+wwv_flow_imp_page.create_worksheet_column(
+ p_id=>wwv_flow_imp.id(11663825127036501)
+,p_db_column_name=>'FINAL_SCORE'
+,p_display_order=>4
+,p_column_identifier=>'D'
+,p_column_label=>'Final Score'
+,p_column_type=>'NUMBER'
+,p_heading_alignment=>'RIGHT'
+,p_column_alignment=>'RIGHT'
+,p_tz_dependent=>'N'
+,p_use_as_row_header=>'N'
+);
+wwv_flow_imp_page.create_worksheet_column(
+ p_id=>wwv_flow_imp.id(11664283656036501)
+,p_db_column_name=>'TOTAL_SCORE'
+,p_display_order=>5
+,p_column_identifier=>'E'
+,p_column_label=>'Total Score'
+,p_column_type=>'NUMBER'
+,p_heading_alignment=>'RIGHT'
+,p_column_alignment=>'RIGHT'
+,p_tz_dependent=>'N'
+,p_use_as_row_header=>'N'
+);
+wwv_flow_imp_page.create_worksheet_column(
+ p_id=>wwv_flow_imp.id(11664623565036503)
+,p_db_column_name=>'GRADE'
+,p_display_order=>6
+,p_column_identifier=>'F'
+,p_column_label=>'Grade'
+,p_column_type=>'STRING'
+,p_heading_alignment=>'LEFT'
+,p_tz_dependent=>'N'
+,p_use_as_row_header=>'N'
+);
+wwv_flow_imp_page.create_worksheet_column(
+ p_id=>wwv_flow_imp.id(11665089701036503)
+,p_db_column_name=>'GRADE_POINT'
+,p_display_order=>7
+,p_column_identifier=>'G'
+,p_column_label=>'Grade Point'
+,p_column_type=>'STRING'
+,p_heading_alignment=>'LEFT'
+,p_tz_dependent=>'N'
+,p_use_as_row_header=>'N'
+);
+wwv_flow_imp_page.create_worksheet_column(
+ p_id=>wwv_flow_imp.id(11558826626903733)
+,p_db_column_name=>'REG_ID'
+,p_display_order=>17
+,p_column_identifier=>'H'
+,p_column_label=>'Reg Id'
+,p_column_type=>'NUMBER'
+,p_heading_alignment=>'RIGHT'
+,p_column_alignment=>'RIGHT'
+,p_use_as_row_header=>'N'
+);
+wwv_flow_imp_page.create_worksheet_column(
+ p_id=>wwv_flow_imp.id(11559570717903740)
+,p_db_column_name=>'STUDENT_ID'
+,p_display_order=>27
+,p_column_identifier=>'I'
+,p_column_label=>'Student Id'
+,p_column_type=>'NUMBER'
+,p_heading_alignment=>'RIGHT'
+,p_column_alignment=>'RIGHT'
+,p_use_as_row_header=>'N'
+);
+wwv_flow_imp_page.create_worksheet_rpt(
+ p_id=>wwv_flow_imp.id(11679310574383228)
+,p_application_user=>'APXWS_DEFAULT'
+,p_report_seq=>10
+,p_report_alias=>'116794'
+,p_status=>'PUBLIC'
+,p_is_default=>'Y'
+,p_report_columns=>'SCORE_ID:MIDTERM_SCORE:FINAL_SCORE:TOTAL_SCORE:GRADE:GRADE_POINT:REG_ID'
+);
+wwv_flow_imp_page.create_page_item(
+ p_id=>wwv_flow_imp.id(11558542627903730)
+,p_name=>'P10_STUDENT_ID'
+,p_item_sequence=>10
+,p_item_plug_id=>wwv_flow_imp.id(11661589928036478)
+,p_display_as=>'NATIVE_HIDDEN'
+,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
+  'value_protected', 'Y')).to_clob
+);
+wwv_flow_imp_page.create_page_computation(
+ p_id=>wwv_flow_imp.id(11558634919903731)
+,p_computation_sequence=>10
+,p_computation_item=>'P10_STUDENT_ID'
+,p_computation_point=>'BEFORE_BOX_BODY'
+,p_computation_type=>'EXPRESSION'
+,p_computation_language=>'PLSQL'
+,p_computation=>':APP_USER'
 );
 end;
 /
